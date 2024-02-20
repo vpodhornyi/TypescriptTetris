@@ -51,13 +51,6 @@ export class Tetromino {
   }
 }
 
-
-// export class TetrominoI extends Tetromino {
-//   constructor() {
-//     super(TetrominoName.I, TetrominoMatrix[TetrominoName.I]);
-//   }
-// }
-
 export const tetrominos: Tetromino[] = [
   new Tetromino(TetrominoName.I, TetrominoMatrix[TetrominoName.I]),
   new Tetromino(TetrominoName.O, TetrominoMatrix[TetrominoName.O]),
