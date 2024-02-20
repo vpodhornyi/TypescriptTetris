@@ -39,15 +39,15 @@ export class Tetromino {
   }
 
   public moveRight(): void {
-    this._column += 1;
+    this._column++;
   }
 
   public moveLeft(): void {
-    this._column -= 1;
+    this._column--;
   }
 
   public moveDown(): void {
-    this._row += 1;
+    this._row++;
   }
 }
 
