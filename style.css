@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(90deg, rgba(229, 219, 105, 0.83), rgba(227, 62, 115, 0.75));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#root {
+    background: rgba(6, 10, 19, 0.7);
+    padding: 0.5vh;
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    gap: 0.3vh;
+}
+
+#root > div {
+    height: min(4vh, 7vw);
+    width: min(4vh, 7vw);
+    background-color: rgba(144, 238, 144, 0.66);
+    border-radius: 0.5vh;
+}
+
+#root > .I {
+    background-color: rgba(227, 62, 115, 0.75);
+}
+
+#root > .O {
+    background-color: rgba(227, 62, 115, 0.75);
+}
+
+#root > .T {
+    background-color: rgba(227, 62, 115, 0.75);
+}
+
+#root > .J {
+    background-color: rgba(227, 62, 115, 0.75);
+}
+
+#root > .L {
+    background-color: rgba(227, 62, 115, 0.75);
+}
+
+#root > .S {
+    background-color: rgba(227, 62, 115, 0.75);
+}
+
+#root > .Z {
+    background-color: rgba(227, 62, 115, 0.75);
+}
