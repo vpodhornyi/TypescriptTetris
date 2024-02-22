@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Tetris</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<div id="root"></div>
+<div class="container">
+    <div class="play_section">
+        <div id="main_field" class="field main_field"></div>
+    </div>
+    <div class="score_section">
+        <div id="extra_field" class="field extra_field"></div>
+    </div>
+</div>
 </body>
 <script type="module" src="./dist/app.js"></script>
 </html>

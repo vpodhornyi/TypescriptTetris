@@ -1,13 +1,11 @@
 import { TetrominoName } from "./TetrominoName.js";
-import { TetrominoMatrix } from "./TetrominoMatrix.js";
 
 
 export class Tetromino {
   private readonly _name: TetrominoName;
   private readonly _matrix: Array<Array<number>>;
-  private _row: number = 1;
+  private _row: number = 0;
   private _column: number = 4;
-
 
   constructor(name: TetrominoName, matrix: Array<Array<number>>) {
     this._name = name;
@@ -50,13 +48,3 @@ export class Tetromino {
     this._row++;
   }
 }
-
-export const tetrominos: Tetromino[] = [
-  new Tetromino(TetrominoName.I, TetrominoMatrix[TetrominoName.I]),
-  new Tetromino(TetrominoName.O, TetrominoMatrix[TetrominoName.O]),
-  new Tetromino(TetrominoName.T, TetrominoMatrix[TetrominoName.T]),
-  new Tetromino(TetrominoName.J, TetrominoMatrix[TetrominoName.J]),
-  new Tetromino(TetrominoName.L, TetrominoMatrix[TetrominoName.L]),
-  new Tetromino(TetrominoName.S, TetrominoMatrix[TetrominoName.S]),
-  new Tetromino(TetrominoName.Z, TetrominoMatrix[TetrominoName.Z]),
-]
