@@ -9,7 +9,7 @@ export abstract class Field {
   private readonly _columns: number;
   private readonly _amount: number;
   private readonly _playFieldArr: Array<Array<number>>;
-  protected cells: Array<Element>;
+  private readonly cells: Array<Element>;
 
   protected constructor(root: Element, rows: number, columns: number, cellSelector: string) {
     this._rows = rows;
