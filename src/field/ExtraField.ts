@@ -8,7 +8,7 @@ export class ExtraField extends Field {
   }
 
   protected setToCenter(tetromino: Tetromino) {
-    tetromino.column = Math.round(this.columns/2 - tetromino.matrix.length/2);
-    tetromino.row = Math.round(this.rows/2 - tetromino.matrix.length/2);
+    tetromino.column = Math.round((this.columns - tetromino.matrix.length) / 2);
+    tetromino.row = Math.round((this.rows - tetromino.matrix.length) / 2);
   }
 }

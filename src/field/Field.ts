@@ -55,9 +55,9 @@ export abstract class Field {
     this.drawTetromino(tetromino);
   }
 
-  private generateField(root: Element): void {
+  private generateField(el: Element): void {
     for (let i: number = 0; i < this._amount; i++) {
-      root.append(document.createElement(DIV));
+      el.append(document.createElement(DIV));
     }
   }
 }

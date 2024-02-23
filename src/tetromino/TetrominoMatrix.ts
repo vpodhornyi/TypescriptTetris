@@ -2,8 +2,8 @@ import { TetrominoName } from "./TetrominoName.js";
 
 export const TetrominoMatrix = {
   [TetrominoName.I]: [
-    [1, 1, 1, 1],
     [0, 0, 0, 0],
+    [1, 1, 1, 1],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ],
