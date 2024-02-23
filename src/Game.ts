@@ -13,7 +13,6 @@ export class Game {
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
 
-
   constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList) {
     this._mainField = mainField;
     this._extraField = extraField;

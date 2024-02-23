@@ -41,8 +41,9 @@ export abstract class Field {
   }
 
   public drawTetromino(tetromino: Tetromino): void {
-    for (let r = 0; r < tetromino.matrix.length; r++) {
-      for (let c = 0; c < tetromino.matrix[0].length; c++) {
+    const ln = tetromino.matrix.length;
+    for (let r = 0; r < ln; r++) {
+      for (let c = 0; c < ln; c++) {
         if (!tetromino.matrix[r][c]) continue;
         const cellIndex = this.convertPositionToIndex(tetromino.row + r, tetromino.column + c);
         this.cells[cellIndex].classList.add(tetromino.name, CLASS_TETROMINO);
