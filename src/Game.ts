@@ -12,36 +12,45 @@ export class Game {
   private readonly _mainField: Field;
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
+  private mainTetromino: Tetromino;
+  private nextTetromino: Tetromino;
 
   constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList) {
     this._mainField = mainField;
     this._extraField = extraField;
     this._tetrominoList = tetrominoList;
+    this.mainTetromino = this._tetrominoList.getRandomTetromino();
+    this.nextTetromino = this._tetrominoList.getRandomTetromino();
   }
 
   public play(): void {
-    const tetromino: Tetromino = this._tetrominoList.getRandomTetromino();
-
-    this._extraField.addTetromino(tetromino);
-    this._mainField.addTetromino(tetromino);
-    document.addEventListener(EVENT_KEY_DOWN, this.onKeyDown(tetromino));
-  }
-
-  private onKeyDown(tetromino: Tetromino) {
-    return (e: KeyboardEvent) => {
+    this._extraField.addTetromino(this.nextTetromino);
+    this._mainField.addTetromino(this.mainTetromino);
+    document.addEventListener(EVENT_KEY_DOWN, (e: KeyboardEvent): void => {
       switch (e.key) {
+        case UP:
+          this.mainTetromino.rotate();
+          break;
         case LEFT:
-          tetromino.moveLeft();
+          this.mainTetromino.moveLeft(this._mainField);
           break;
         case RIGHT:
-          tetromino.moveRight();
+          this.mainTetromino.moveRight(this._mainField);
           break;
         case DOWN:
-          tetromino.moveDown();
-          break;
+          if (this.mainTetromino.moveDown(this._mainField)) {
+            this._mainField.placeTetromino(this.mainTetromino);
+            this.mainTetromino = this.nextTetromino;
+            this._mainField.addTetromino(this.mainTetromino);
+
+            this.nextTetromino = this._tetrominoList.getRandomTetromino();
+            this._extraField.clearField();
+            this._extraField.addTetromino(this.nextTetromino);
+          }
       }
       this._mainField.clearField();
-      this._mainField.drawTetromino(tetromino);
-    }
+      this._mainField.drawField();
+      this._mainField.drawTetromino(this.mainTetromino);
+    });
   }
 }

@@ -8,7 +8,7 @@ export abstract class Field {
   private readonly _rows: number;
   private readonly _columns: number;
   private readonly _amount: number;
-  private readonly _playFieldArr: Array<Array<number>>;
+  private readonly _playFieldArr: Array<Array<any>>;
   private readonly cells: Array<Element>;
 
   protected constructor(root: Element, rows: number, columns: number, cellSelector: string) {
@@ -30,6 +30,11 @@ export abstract class Field {
     return this._columns;
   }
 
+
+  get playFieldArr(): Array<Array<any>> {
+    return this._playFieldArr;
+  }
+
   protected abstract setToCenter(tetromino: Tetromino): void;
 
   public clearField(): void {
@@ -45,8 +50,21 @@ export abstract class Field {
     for (let r = 0; r < ln; r++) {
       for (let c = 0; c < ln; c++) {
         if (!tetromino.matrix[r][c]) continue;
+
         const cellIndex = this.convertPositionToIndex(tetromino.row + r, tetromino.column + c);
         this.cells[cellIndex].classList.add(tetromino.name, CLASS_TETROMINO);
+      }
+    }
+  }
+
+  public drawField(): void {
+    for(let row: number = 0; row < this._rows; row++){
+      for(let column: number = 0; column < this._columns; column++){
+        if(this._playFieldArr[row][column] == 0) continue;
+
+        const name = this._playFieldArr[row][column];
+        const cellIndex = this.convertPositionToIndex(row,column);
+        this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
       }
     }
   }
@@ -54,6 +72,16 @@ export abstract class Field {
   public addTetromino(tetromino: Tetromino) {
     this.setToCenter(tetromino);
     this.drawTetromino(tetromino);
+  }
+
+  public placeTetromino(tetromino: Tetromino) {
+    for(let row: number = 0; row < tetromino.matrixLength; row++){
+      for(let column: number = 0; column < tetromino.matrixLength; column++){
+        if(tetromino.matrix[row][column]){
+          this._playFieldArr[tetromino.row + row][tetromino.column + column] = tetromino.name;
+        }
+      }
+    }
   }
 
   private generateField(el: Element): void {

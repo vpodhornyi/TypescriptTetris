@@ -5,8 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "start": "lite-server",
-    "build": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -w"
   },
   "author": "viktor podhornyi",
   "license": "ISC",
