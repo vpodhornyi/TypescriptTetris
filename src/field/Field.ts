@@ -30,7 +30,6 @@ export abstract class Field {
     return this._columns;
   }
 
-
   get playFieldArr(): Array<Array<any>> {
     return this._playFieldArr;
   }

@@ -7,6 +7,7 @@ const UP: string = 'ArrowUp';
 const LEFT: string = 'ArrowLeft';
 const RIGHT: string = 'ArrowRight';
 const DOWN: string = 'ArrowDown';
+const START_SPEED: number = 500;
 
 export class Game {
   private readonly _mainField: Field;
@@ -35,6 +36,12 @@ export class Game {
     }
   }
 
+  private drawMainField(): void {
+    this._mainField.clearField();
+    this._mainField.drawField();
+    this._mainField.drawTetromino(this.mainTetromino);
+  }
+
   private autoMoveDown(speed: number) {
     setInterval(() => {
       this.moveTetrominoDown();
@@ -42,16 +49,10 @@ export class Game {
     }, speed)
   }
 
-  private drawMainField(): void {
-    this._mainField.clearField();
-    this._mainField.drawField();
-    this._mainField.drawTetromino(this.mainTetromino);
-  }
-
   public play(): void {
     this._extraField.addTetromino(this.nextTetromino);
     this._mainField.addTetromino(this.mainTetromino);
-    this.autoMoveDown(300);
+    this.autoMoveDown(START_SPEED);
 
     document.addEventListener(EVENT_KEY_DOWN, (e: KeyboardEvent): void => {
       switch (e.key) {
