@@ -20,16 +20,43 @@ export class Game {
     this._extraField = extraField;
     this._tetrominoList = tetrominoList;
     this.mainTetromino = this._tetrominoList.getRandomTetromino();
-    this.nextTetromino = this._tetrominoList.getRandomTetromino();
+    this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._mainField);
+  }
+
+  private moveTetrominoDown(): void {
+    if (this.mainTetromino.moveDown(this._mainField)) {
+      this._mainField.placeTetromino(this.mainTetromino);
+      this.mainTetromino = this.nextTetromino;
+      this._mainField.addTetromino(this.mainTetromino);
+
+      this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._mainField);
+      this._extraField.clearField();
+      this._extraField.addTetromino(this.nextTetromino);
+    }
+  }
+
+  private autoMoveDown(speed: number) {
+    setInterval(() => {
+      this.moveTetrominoDown();
+      this.drawMainField();
+    }, speed)
+  }
+
+  private drawMainField(): void {
+    this._mainField.clearField();
+    this._mainField.drawField();
+    this._mainField.drawTetromino(this.mainTetromino);
   }
 
   public play(): void {
     this._extraField.addTetromino(this.nextTetromino);
     this._mainField.addTetromino(this.mainTetromino);
+    this.autoMoveDown(300);
+
     document.addEventListener(EVENT_KEY_DOWN, (e: KeyboardEvent): void => {
       switch (e.key) {
         case UP:
-          this.mainTetromino.rotate();
+          this.mainTetromino.rotate(this._mainField);
           break;
         case LEFT:
           this.mainTetromino.moveLeft(this._mainField);
@@ -38,19 +65,9 @@ export class Game {
           this.mainTetromino.moveRight(this._mainField);
           break;
         case DOWN:
-          if (this.mainTetromino.moveDown(this._mainField)) {
-            this._mainField.placeTetromino(this.mainTetromino);
-            this.mainTetromino = this.nextTetromino;
-            this._mainField.addTetromino(this.mainTetromino);
-
-            this.nextTetromino = this._tetrominoList.getRandomTetromino();
-            this._extraField.clearField();
-            this._extraField.addTetromino(this.nextTetromino);
-          }
+          this.moveTetrominoDown();
       }
-      this._mainField.clearField();
-      this._mainField.drawField();
-      this._mainField.drawTetromino(this.mainTetromino);
+      this.drawMainField();
     });
   }
 }

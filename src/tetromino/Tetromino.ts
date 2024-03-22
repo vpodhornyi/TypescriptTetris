@@ -55,9 +55,14 @@ export class Tetromino {
     return rotateMatrix;
   }
 
-  public rotate() {
-    // const oldMatrix = this._matrix;
-    this._matrix = this.rotateMatrix()
+  public rotate(field: Field) {
+    const tmpMatrix = this.matrix;
+    this._matrix = this.rotateMatrix();
+
+    if (!this.isValid(field))
+      this._matrix = tmpMatrix;
+
+    return this;
   }
 
   public moveLeft(field: Field): void {
@@ -83,8 +88,8 @@ export class Tetromino {
   }
 
   public isValid(field: Field) {
-    for (let row = 0; row < this._matrixLength; row++) {
-      for (let column = 0; column < this._matrixLength; column++) {
+    for (let row: number = 0; row < this._matrixLength; row++) {
+      for (let column: number = 0; column < this._matrixLength; column++) {
         if (this.isOutsideOfGameboard(row, column, field)) return false;
         if (this.hasCollisions(row, column, field)) return false;
       }
