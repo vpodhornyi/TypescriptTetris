@@ -35,10 +35,29 @@ body {
     grid-template-columns: repeat(6, auto);
 }
 
+.score {
+    width: 207px;
+    margin-top: 30px;
+    background: rgba(15, 16, 19, 1);
+}
+
+.text {
+    color: lightgray;
+    padding: 10px;
+    text-align: center;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.info_number {
+    font-size: 25px;
+}
 .field > div {
     height: min(4vh, 7vw);
     width: min(4vh, 7vw);
-    background-color: rgba(15, 16, 19, 0.66);
+    background-color: rgba(15, 16, 19, 1);
     /*border-radius: 0.5vh;*/
 }
 

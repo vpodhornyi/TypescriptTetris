@@ -1,13 +1,16 @@
 import { Field } from "./field/Field";
 import { TetrominoList } from "./tetromino/TetrominoList.js";
 import { Tetromino } from "./tetromino/Tetromino.js";
+import { EventKey } from "./EventKey.js";
 
-const EVENT_KEY_DOWN = 'keydown';
-const UP: string = 'ArrowUp';
-const LEFT: string = 'ArrowLeft';
-const RIGHT: string = 'ArrowRight';
-const DOWN: string = 'ArrowDown';
 const START_SPEED: number = 500;
+const {
+  KEYDOWN,
+  UP,
+  LEFT,
+  RIGHT,
+  DOWN
+} = EventKey;
 
 export class Game {
   private readonly _mainField: Field;
@@ -54,7 +57,7 @@ export class Game {
     this._mainField.addTetromino(this.mainTetromino);
     this.autoMoveDown(START_SPEED);
 
-    document.addEventListener(EVENT_KEY_DOWN, (e: KeyboardEvent): void => {
+    document.addEventListener(KEYDOWN, (e: KeyboardEvent): void => {
       switch (e.key) {
         case UP:
           this.mainTetromino.rotate(this._mainField);
