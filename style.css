@@ -65,6 +65,10 @@ body {
     box-sizing: border-box;
 }
 
+.fullRow  {
+    background-color: black !important;
+}
+
 .I.block {
     background: #00ffff;
     border: 5px solid #00ffff;

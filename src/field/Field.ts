@@ -57,13 +57,31 @@ export abstract class Field {
   }
 
   public drawField(): void {
-    for(let row: number = 0; row < this._rows; row++){
-      for(let column: number = 0; column < this._columns; column++){
-        if(this._playFieldArr[row][column] == 0) continue;
+    for (let row: number = 4; row < this._rows; row++) {
+      let fullRow: number = this._columns;
+      for (let column: number = 0; column < this._columns; column++) {
+        if (this._playFieldArr[row][column] == 0) continue;
+        fullRow -= 1;
 
         const name = this._playFieldArr[row][column];
-        const cellIndex = this.convertPositionToIndex(row,column);
+        const cellIndex = this.convertPositionToIndex(row, column);
+        // console.log(cellIndex);
+
         this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
+
+        if (!fullRow) {
+          console.log("Row FULL!!!");
+          // for (let i = 0; i < this._columns; i++) {
+          //   this.cells[this.convertPositionToIndex(row, i)].classList.remove(name, CLASS_TETROMINO);
+          //   this._playFieldArr[row][i] = 0;
+          // }
+
+          console.log(this._playFieldArr.length);
+          this._playFieldArr.splice(row, 1);
+          console.log(this._playFieldArr.length);
+          this._playFieldArr.unshift(new Array(this._columns).fill(0));
+          console.log(this._playFieldArr.length);
+        }
       }
     }
   }
@@ -74,9 +92,9 @@ export abstract class Field {
   }
 
   public placeTetromino(tetromino: Tetromino) {
-    for(let row: number = 0; row < tetromino.matrixLength; row++){
-      for(let column: number = 0; column < tetromino.matrixLength; column++){
-        if(tetromino.matrix[row][column]){
+    for (let row: number = 0; row < tetromino.matrixLength; row++) {
+      for (let column: number = 0; column < tetromino.matrixLength; column++) {
+        if (tetromino.matrix[row][column]) {
           this._playFieldArr[tetromino.row + row][tetromino.column + column] = tetromino.name;
         }
       }

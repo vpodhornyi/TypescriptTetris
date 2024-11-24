@@ -5,7 +5,6 @@ import { EventKey } from "./EventKey.js";
 
 const START_SPEED: number = 500;
 const {
-  KEYDOWN,
   UP,
   LEFT,
   RIGHT,
@@ -57,7 +56,7 @@ export class Game {
     this._mainField.addTetromino(this.mainTetromino);
     this.autoMoveDown(START_SPEED);
 
-    document.addEventListener(KEYDOWN, (e: KeyboardEvent): void => {
+    document.addEventListener("keydown", (e: KeyboardEvent): void => {
       switch (e.key) {
         case UP:
           this.mainTetromino.rotate(this._mainField);
