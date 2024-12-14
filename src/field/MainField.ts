@@ -9,6 +9,6 @@ export class MainField extends Field {
 
   protected setToCenter(tetromino: Tetromino) {
     tetromino.column = Math.round((this.columns - tetromino.matrix.length)/2);
-    tetromino.row = 0;
+    tetromino.row = 0 - tetromino.matrix.length;
   }
 }

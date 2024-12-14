@@ -23,7 +23,6 @@ export class Tetromino {
     this._column = value;
   }
 
-
   get name(): TetrominoName {
     return this._name;
   }
@@ -108,6 +107,6 @@ export class Tetromino {
 
   public hasCollisions(row: number, column: number, field: Field) {
     return this._matrix[row][column]
-        && field.playFieldArr[this._row + row][this._column + column];
+        && field.playFieldArr[this._row + row] && field.playFieldArr[this._row + row][this._column + column];
   }
 }

@@ -51,12 +51,13 @@ export abstract class Field {
         if (!tetromino.matrix[r][c]) continue;
 
         const cellIndex = this.convertPositionToIndex(tetromino.row + r, tetromino.column + c);
-        this.cells[cellIndex].classList.add(tetromino.name, CLASS_TETROMINO);
+        this.cells[cellIndex] && this.cells[cellIndex].classList.add(tetromino.name, CLASS_TETROMINO);
       }
     }
   }
 
   private deleteFullRows(): void {
+    this.clearField();
     for (let row: number = 0; row < this._rows; row++) {
       for (let column: number = 0; column < this._columns; column++) {
 
@@ -86,7 +87,6 @@ export abstract class Field {
         if (!fullRow) {
           this._playFieldArr.splice(row, 1);
           this._playFieldArr.unshift(new Array(this._columns).fill(0));
-          this.clearField();
           this.deleteFullRows();
         }
       }
