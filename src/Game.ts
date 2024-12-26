@@ -1,9 +1,9 @@
 import { Field } from "./field/Field";
 import { TetrominoList } from "./tetromino/TetrominoList.js";
 import { Tetromino } from "./tetromino/Tetromino.js";
+import { Score } from "./score/Score.js";
 import { EventKey } from "./EventKey.js";
 
-const START_SPEED: number = 500;
 const {
   UP,
   LEFT,
@@ -15,13 +15,15 @@ export class Game {
   private readonly _mainField: Field;
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
+  private readonly _score: Score;
   private mainTetromino: Tetromino;
   private nextTetromino: Tetromino;
 
-  constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList) {
+  constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList, score: Score) {
     this._mainField = mainField;
     this._extraField = extraField;
     this._tetrominoList = tetrominoList;
+    this._score = score;
     this.mainTetromino = this._tetrominoList.getRandomTetromino();
     this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._mainField);
   }
@@ -38,23 +40,33 @@ export class Game {
     }
   }
 
-  private drawMainField(): void {
+  private drawMainField() {
     this._mainField.clearField();
     this._mainField.drawField();
     this._mainField.drawTetromino(this.mainTetromino);
   }
 
-  private autoMoveDown(speed: number) {
+  private autoMoveDown() {
     setInterval(() => {
       this.moveTetrominoDown();
       this.drawMainField();
-    }, speed)
+      // console.log(isFullRow);
+      // if (isFullRow) {
+      //   this._score.setLines(1);
+      //   this._score.setScore();
+      //
+      //   if (this._score.score % 100 === 0) {
+      //     this._score.setLevel();
+      //   }
+      // }
+
+    }, this._score.speed)
   }
 
   public play(): void {
     this._extraField.addTetromino(this.nextTetromino);
     this._mainField.addTetromino(this.mainTetromino);
-    this.autoMoveDown(START_SPEED);
+    this.autoMoveDown();
 
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
       switch (e.key) {

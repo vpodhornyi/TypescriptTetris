@@ -1,4 +1,5 @@
 import { Tetromino } from "../tetromino/Tetromino.js";
+import { Score } from "../score/Score.js";
 
 const DIV: string = 'div';
 const CLASS_TETROMINO: string = 'block';
@@ -10,6 +11,7 @@ export abstract class Field {
   private readonly _amount: number;
   private readonly _playFieldArr: Array<Array<any>>;
   private readonly cells: Array<Element>;
+  private _rowCount: number;
 
   protected constructor(root: Element, rows: number, columns: number, cellSelector: string) {
     this._rows = rows;
@@ -20,6 +22,7 @@ export abstract class Field {
     this._amount = this._rows * this._columns;
     this.generateField(root);
     this.cells = Array.from(document.querySelectorAll(cellSelector));
+    this._rowCount = 0;
   }
 
   get rows(): number {
@@ -88,6 +91,14 @@ export abstract class Field {
           this._playFieldArr.splice(row, 1);
           this._playFieldArr.unshift(new Array(this._columns).fill(0));
           this.deleteFullRows();
+          this._rowCount += 1;
+
+          // score.setLines(this._rowCount);
+          // score.setScore();
+          //
+          // if (score.score % 100 === 0) {
+          //   score.setLevel();
+          // }
         }
       }
     }
