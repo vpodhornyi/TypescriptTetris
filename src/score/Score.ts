@@ -17,7 +17,6 @@ export class Score {
     this.setLines(0);
   }
 
-
   get score(): number {
     return this._score;
   }
