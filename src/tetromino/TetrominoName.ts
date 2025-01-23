@@ -4,6 +4,6 @@ export enum TetrominoName {
   T = 'T',
   J = 'J',
   L = 'L',
-  S = 'S',
-  Z = 'Z',
+  // S = 'S',
+  // Z = 'Z',
 }

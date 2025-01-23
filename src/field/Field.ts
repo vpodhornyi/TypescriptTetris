@@ -1,5 +1,5 @@
-import { Tetromino } from "../tetromino/Tetromino.js";
-import { Score } from "../score/Score.js";
+import {Tetromino} from "../tetromino/Tetromino.js";
+import {Score} from "../score/Score.js";
 
 const DIV: string = 'div';
 const CLASS_TETROMINO: string = 'block';
@@ -17,8 +17,8 @@ export abstract class Field {
     this._rows = rows;
     this._columns = columns;
     this._playFieldArr = new Array(this._rows)
-        .fill(0)
-        .map(() => new Array(this._columns).fill(0));
+      .fill(0)
+      .map(() => new Array(this._columns).fill(0));
     this._amount = this._rows * this._columns;
     this.generateField(root);
     this.cells = Array.from(document.querySelectorAll(cellSelector));
@@ -73,7 +73,8 @@ export abstract class Field {
     }
   }
 
-  public drawField(): void {
+  public drawField(score: Score): boolean {
+    let res = false
     for (let row: number = 0; row < this._rows; row++) {
       let fullRow: number = this._columns;
       for (let column: number = 0; column < this._columns; column++) {
@@ -93,15 +94,17 @@ export abstract class Field {
           this.deleteFullRows();
           this._rowCount += 1;
 
-          // score.setLines(this._rowCount);
-          // score.setScore();
-          //
-          // if (score.score % 100 === 0) {
-          //   score.setLevel();
-          // }
+          score.setLines(this._rowCount);
+          score.setScore();
+
+          if (score.isNewLevel()) {
+            score.setLevel();
+          }
+          res = true
         }
       }
     }
+    return res;
   }
 
   public addTetromino(tetromino: Tetromino) {

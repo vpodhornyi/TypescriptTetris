@@ -1,8 +1,8 @@
-import { Field } from "./field/Field";
-import { TetrominoList } from "./tetromino/TetrominoList.js";
-import { Tetromino } from "./tetromino/Tetromino.js";
-import { Score } from "./score/Score.js";
-import { EventKey } from "./EventKey.js";
+import {Field} from "./field/Field";
+import {TetrominoList} from "./tetromino/TetrominoList.js";
+import {Tetromino} from "./tetromino/Tetromino.js";
+import {Score} from "./score/Score.js";
+import {EventKey} from "./EventKey.js";
 
 const {
   UP,
@@ -12,6 +12,7 @@ const {
 } = EventKey;
 
 export class Game {
+  private intervalID: any;
   private readonly _mainField: Field;
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
@@ -25,7 +26,7 @@ export class Game {
     this._tetrominoList = tetrominoList;
     this._score = score;
     this.mainTetromino = this._tetrominoList.getRandomTetromino();
-    this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._mainField);
+    this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
   }
 
   private moveTetrominoDown(): void {
@@ -34,39 +35,36 @@ export class Game {
       this.mainTetromino = this.nextTetromino;
       this._mainField.addTetromino(this.mainTetromino);
 
-      this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._mainField);
+      this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
       this._extraField.clearField();
       this._extraField.addTetromino(this.nextTetromino);
     }
   }
 
-  private drawMainField() {
+  private drawMainField(intervalId: any): void {
     this._mainField.clearField();
-    this._mainField.drawField();
+    const isFullRow = this._mainField.drawField(this._score);
     this._mainField.drawTetromino(this.mainTetromino);
+
+    if (isFullRow && this._score.isNewLevel()) {
+      clearInterval(intervalId);
+      this.intervalID = this.autoMoveDown();
+    }
   }
 
   private autoMoveDown() {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       this.moveTetrominoDown();
-      this.drawMainField();
-      // console.log(isFullRow);
-      // if (isFullRow) {
-      //   this._score.setLines(1);
-      //   this._score.setScore();
-      //
-      //   if (this._score.score % 100 === 0) {
-      //     this._score.setLevel();
-      //   }
-      // }
+      this.drawMainField(intervalId);
 
     }, this._score.speed)
+    return intervalId;
   }
 
   public play(): void {
     this._extraField.addTetromino(this.nextTetromino);
     this._mainField.addTetromino(this.mainTetromino);
-    this.autoMoveDown();
+    this.intervalID = this.autoMoveDown();
 
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
       switch (e.key) {
@@ -82,7 +80,7 @@ export class Game {
         case DOWN:
           this.moveTetrominoDown();
       }
-      this.drawMainField();
+      this.drawMainField(this.intervalID);
     });
   }
 }
