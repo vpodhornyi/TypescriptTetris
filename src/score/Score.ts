@@ -20,6 +20,7 @@ export class Score {
     this._linesElement = lines;
     this._score = startScore;
     this._level = startLevel;
+    level.innerHTML = startLevel.toString();
     this._speed = startSpeed;
     this._scoreStep = scoreStep;
     this._speedStep = speedStep;

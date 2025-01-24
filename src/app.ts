@@ -6,7 +6,7 @@ import {Game} from "./Game.js";
 import {Score} from "./score/Score.js";
 
 const START_SCORE = 0;
-const START_LEVEL = 0;
+const START_LEVEL = 1;
 const START_SPEED = 1000;
 const SCORE_STEP = 100;
 const SPEED_STEP = 25;

@@ -5,6 +5,8 @@ import {Score} from "./score/Score.js";
 import {EventKey} from "./EventKey.js";
 
 const KEY = EventKey;
+const PAUSE_CLASS = "pause";
+const PAUSE_NOT_ACTIEVE_CLASS = "pause_not_active";
 
 export class Game {
   private intervalID: any;
@@ -38,24 +40,21 @@ export class Game {
     }
   }
 
-  private resetAutoMove(): void {
-    clearInterval(this.intervalID);
-    this.autoMoveDown();
-  }
-
   private drawMainField(): void {
     this._mainField.clearField();
     const isFullRow = this._mainField.drawField(this._score);
     this._mainField.drawTetromino(this.mainTetromino);
 
-    if (isFullRow && this._score.isNewLevel()) this.resetAutoMove();
+    if (isFullRow && this._score.isNewLevel()) {
+      clearInterval(this.intervalID);
+      this.autoMoveDown();
+    }
   }
 
   private autoMoveDown() {
     this.intervalID = setInterval(() => {
       this.moveTetrominoDown();
       this.drawMainField();
-
     }, this._score.speed)
   }
 
@@ -67,11 +66,11 @@ export class Game {
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
       if (e.key === KEY.BACKSPACE) {
         if (this.pause) {
-          pause.className = "pause_not_active";
+          pause.className = PAUSE_NOT_ACTIEVE_CLASS;
           this.autoMoveDown();
           this.pause = false;
         } else {
-          pause.className = "pause";
+          pause.className = PAUSE_CLASS;
           clearInterval(this.intervalID);
           this.pause = true;
         }
