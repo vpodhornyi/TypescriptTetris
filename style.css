@@ -16,6 +16,23 @@ body {
     padding: 1vh;
 }
 
+.pause {
+    display: block;
+    position: absolute;
+    background-color: antiquewhite;
+    padding: 30px;
+}
+
+.pause_not_active {
+    display: none;
+}
+
+.play_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .score_section {
     margin: 0 5vh 0 100px;
 }
@@ -54,6 +71,7 @@ body {
 .info_number {
     font-size: 25px;
 }
+
 .field > div {
     height: min(4vh, 7vw);
     width: min(4vh, 7vw);
@@ -65,7 +83,7 @@ body {
     box-sizing: border-box;
 }
 
-.fullRow  {
+.fullRow {
     background-color: black !important;
 }
 

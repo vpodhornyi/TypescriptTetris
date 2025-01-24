@@ -4,15 +4,11 @@ import {Tetromino} from "./tetromino/Tetromino.js";
 import {Score} from "./score/Score.js";
 import {EventKey} from "./EventKey.js";
 
-const {
-  UP,
-  LEFT,
-  RIGHT,
-  DOWN
-} = EventKey;
+const KEY = EventKey;
 
 export class Game {
   private intervalID: any;
+  private pause: boolean;
   private readonly _mainField: Field;
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
@@ -21,6 +17,7 @@ export class Game {
   private nextTetromino: Tetromino;
 
   constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList, score: Score) {
+    this.pause = false;
     this._mainField = mainField;
     this._extraField = extraField;
     this._tetrominoList = tetrominoList;
@@ -41,46 +38,61 @@ export class Game {
     }
   }
 
-  private drawMainField(intervalId: any): void {
+  private resetAutoMove(): void {
+    clearInterval(this.intervalID);
+    this.autoMoveDown();
+  }
+
+  private drawMainField(): void {
     this._mainField.clearField();
     const isFullRow = this._mainField.drawField(this._score);
     this._mainField.drawTetromino(this.mainTetromino);
 
-    if (isFullRow && this._score.isNewLevel()) {
-      clearInterval(intervalId);
-      this.intervalID = this.autoMoveDown();
-    }
+    if (isFullRow && this._score.isNewLevel()) this.resetAutoMove();
   }
 
   private autoMoveDown() {
-    const intervalId = setInterval(() => {
+    this.intervalID = setInterval(() => {
       this.moveTetrominoDown();
-      this.drawMainField(intervalId);
+      this.drawMainField();
 
     }, this._score.speed)
-    return intervalId;
   }
 
-  public play(): void {
+  public play(pause: Element): void {
     this._extraField.addTetromino(this.nextTetromino);
     this._mainField.addTetromino(this.mainTetromino);
-    this.intervalID = this.autoMoveDown();
+    this.autoMoveDown();
 
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
-      switch (e.key) {
-        case UP:
-          this.mainTetromino.rotate(this._mainField);
-          break;
-        case LEFT:
-          this.mainTetromino.moveLeft(this._mainField);
-          break;
-        case RIGHT:
-          this.mainTetromino.moveRight(this._mainField);
-          break;
-        case DOWN:
-          this.moveTetrominoDown();
+      if (e.key === KEY.BACKSPACE) {
+        if (this.pause) {
+          pause.className = "pause_not_active";
+          this.autoMoveDown();
+          this.pause = false;
+        } else {
+          pause.className = "pause";
+          clearInterval(this.intervalID);
+          this.pause = true;
+        }
       }
-      this.drawMainField(this.intervalID);
+
+      if (!this.pause) {
+        switch (e.key) {
+          case KEY.UP:
+            this.mainTetromino.rotate(this._mainField);
+            break;
+          case KEY.LEFT:
+            this.mainTetromino.moveLeft(this._mainField);
+            break;
+          case KEY.RIGHT:
+            this.mainTetromino.moveRight(this._mainField);
+            break;
+          case KEY.DOWN:
+            this.moveTetrominoDown();
+        }
+        this.drawMainField();
+      }
     });
   }
 }
