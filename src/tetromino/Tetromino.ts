@@ -77,7 +77,6 @@ export class Tetromino {
   }
 
   public moveDown(field: Field): boolean {
-    // if (this._row + this._matrixLength < field.rows)
     this._row++;
     if (!this.isValid(field)) {
       this._row--;

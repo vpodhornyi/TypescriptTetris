@@ -5,6 +5,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #4c504c;
+    background-image: url("./src/assets/images/background.jpg");
     height: 100vh;
     display: flex;
     justify-content: center;

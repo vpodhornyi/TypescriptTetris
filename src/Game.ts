@@ -10,7 +10,7 @@ const PAUSE_NOT_ACTIEVE_CLASS = "pause_not_active";
 
 export class Game {
   private intervalID: any;
-  private pause: boolean;
+  private isPause: boolean;
   private readonly _mainField: Field;
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
@@ -19,7 +19,7 @@ export class Game {
   private nextTetromino: Tetromino;
 
   constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList, score: Score) {
-    this.pause = false;
+    this.isPause = false;
     this._mainField = mainField;
     this._extraField = extraField;
     this._tetrominoList = tetrominoList;
@@ -58,25 +58,25 @@ export class Game {
     }, this._score.speed)
   }
 
-  public play(pause: Element): void {
+  public play(pauseElement: Element): void {
     this._extraField.addTetromino(this.nextTetromino);
     this._mainField.addTetromino(this.mainTetromino);
     this.autoMoveDown();
 
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
       if (e.key === KEY.BACKSPACE) {
-        if (this.pause) {
-          pause.className = PAUSE_NOT_ACTIEVE_CLASS;
+        if (this.isPause) {
+          pauseElement.className = PAUSE_NOT_ACTIEVE_CLASS;
           this.autoMoveDown();
-          this.pause = false;
+          this.isPause = false;
         } else {
-          pause.className = PAUSE_CLASS;
+          pauseElement.className = PAUSE_CLASS;
           clearInterval(this.intervalID);
-          this.pause = true;
+          this.isPause = true;
         }
       }
 
-      if (!this.pause) {
+      if (!this.isPause) {
         switch (e.key) {
           case KEY.UP:
             this.mainTetromino.rotate(this._mainField);
