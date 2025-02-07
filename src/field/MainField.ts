@@ -1,5 +1,5 @@
-import { Field } from "./Field.js";
-import { Tetromino } from "../tetromino/Tetromino";
+import {Field} from "./Field.js";
+import {Tetromino} from "../tetromino/Tetromino";
 
 export class MainField extends Field {
 
@@ -8,7 +8,7 @@ export class MainField extends Field {
   }
 
   protected setToCenter(tetromino: Tetromino) {
-    tetromino.column = Math.round((this.columns - tetromino.matrix.length)/2);
+    tetromino.column = Math.round((this.columns - tetromino.matrix.length) / 2);
     tetromino.row = 0 - tetromino.matrix.length;
   }
 }

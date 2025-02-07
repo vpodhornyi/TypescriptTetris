@@ -23,6 +23,7 @@ body {
     position: absolute;
     background-color: antiquewhite;
     padding: 30px;
+    font-weight: bold;
 }
 
 .pause_not_active {
@@ -61,6 +62,55 @@ body {
     width: 100%;
     margin-top: 15px;
     background: rgba(15, 16, 19, 1);
+}
+
+.buttons_block {
+    position: relative;
+    margin-top: 15px;
+    height: 100%;
+    width: 100%;
+}
+
+.button {
+    position: absolute;
+    padding: 10px 0;
+    background-color: black;
+    font-weight: bold;
+    width: 70px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    color: lightgray;
+}
+
+.button:hover {
+    background-color: dimgray;
+    transition: 0.3s;
+}
+
+.btn_rotate {
+    top: 15px;
+    left: calc(50% - 35px);
+}
+
+.btn_left {
+    left: 0;
+    top: calc(50% - 19px);
+}
+
+.btn_right {
+    right: 0;
+    top: calc(50% - 19px);
+}
+
+.btn_down {
+    left: calc(50% - 35px);
+    top: calc(50% - 19px);
+}
+
+.btn_pause {
+    bottom: 15px;
+    left: calc(50% - 35px);
 }
 
 .text {

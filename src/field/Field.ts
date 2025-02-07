@@ -59,49 +59,48 @@ export abstract class Field {
     }
   }
 
-  private deleteFullRows(): void {
-    this.clearField();
-    for (let row: number = 0; row < this._rows; row++) {
-      for (let column: number = 0; column < this._columns; column++) {
+  private deleteFullRows(isFullRow: boolean, score: Score, row: number): boolean {
+    if (isFullRow) {
+      this._playFieldArr.splice(row, 1);
+      this._playFieldArr.unshift(new Array(this._columns).fill(0));
+      this.clearField();
+      for (let row: number = 0; row < this._rows; row++) {
+        for (let column: number = 0; column < this._columns; column++) {
 
-        if (this._playFieldArr[row][column] == 0) continue;
+          if (this._playFieldArr[row][column] == 0) continue;
 
-        const name = this._playFieldArr[row][column];
-        const cellIndex: number = this.convertPositionToIndex(row, column);
-        this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
+          const name = this._playFieldArr[row][column];
+          const cellIndex: number = this.convertPositionToIndex(row, column);
+          this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
+        }
       }
+      this._rowCount += 1;
+      score.setLines(this._rowCount);
+      score.setScore();
+
+      if (score.isNewLevel()) {
+        score.setLevel();
+      }
+      return  true
     }
+    return false;
   }
 
   public drawField(score: Score): boolean {
     let res = false
     for (let row: number = 0; row < this._rows; row++) {
-      let fullRow: number = this._columns;
+      let columnsCaunt: number = this._columns;
       for (let column: number = 0; column < this._columns; column++) {
 
         if (this._playFieldArr[row][column] == 0) continue;
 
-        fullRow -= 1;
+        columnsCaunt -= 1;
 
         const name = this._playFieldArr[row][column];
         const cellIndex: number = this.convertPositionToIndex(row, column);
 
         this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
-
-        if (!fullRow) {
-          this._playFieldArr.splice(row, 1);
-          this._playFieldArr.unshift(new Array(this._columns).fill(0));
-          this.deleteFullRows();
-          this._rowCount += 1;
-
-          score.setLines(this._rowCount);
-          score.setScore();
-
-          if (score.isNewLevel()) {
-            score.setLevel();
-          }
-          res = true
-        }
+        res = this.deleteFullRows(columnsCaunt === 0, score, row);
       }
     }
     return res;

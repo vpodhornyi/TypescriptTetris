@@ -1,5 +1,5 @@
-import { Field } from "./Field.js";
-import { Tetromino } from "../tetromino/Tetromino.js";
+import {Field} from "./Field.js";
+import {Tetromino} from "../tetromino/Tetromino.js";
 
 export class ExtraField extends Field {
 
