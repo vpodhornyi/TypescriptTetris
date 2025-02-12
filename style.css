@@ -16,6 +16,12 @@ body {
 .container {
     display: flex;
     padding: 1vh;
+    position: relative;
+}
+
+.start_mod {
+    position: absolute;
+    background-color: antiquewhite;
 }
 
 .pause {
@@ -74,18 +80,8 @@ body {
 .button {
     position: absolute;
     padding: 10px 0;
-    background-color: black;
     font-weight: bold;
     width: 70px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 5px;
-    color: lightgray;
-}
-
-.button:hover {
-    background-color: dimgray;
-    transition: 0.3s;
 }
 
 .btn_rotate {
