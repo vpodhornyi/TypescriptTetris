@@ -4,9 +4,8 @@ import {ExtraField} from "./field/ExtraField.js";
 import {TetrominoList} from "./tetromino/TetrominoList.js";
 import {Game} from "./Game.js";
 import {Score} from "./score/Score.js";
-import {EventKey} from "./EventKey.js";
+import {EventKey as KEY} from "./EventKey.js";
 
-const KEY = EventKey;
 const START_SCORE = 0;
 const START_LEVEL = 1;
 const START_SPEED = 1000;
@@ -20,11 +19,9 @@ const EXTRA_FIELD_ROWS: number = 6;
 const EXTRA_FIELD_COLUMNS: number = 6;
 const CELLS_SELECTOR_MAIN: string = '#main_field div';
 const CELLS_SELECTOR_EXTRA: string = '#extra_field div';
-const CONTAINER: string = '#container';
-const START_DIALOG: string = '#start_dialog';
 
-const container = document.querySelector(CONTAINER) as HTMLElement;
-const startDialog = document.querySelector(START_DIALOG) as HTMLElement;
+const container = document.querySelector('#container') as HTMLElement;
+const startDialog = document.querySelector('#start_dialog') as HTMLElement;
 const main_field = document.querySelector('#main_field') as HTMLElement;
 const extra_field = document.querySelector('#extra_field') as HTMLElement;
 const score = document.querySelector('#score') as HTMLElement;

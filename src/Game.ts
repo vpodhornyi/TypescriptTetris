@@ -2,9 +2,7 @@ import {Field} from "./field/Field";
 import {TetrominoList} from "./tetromino/TetrominoList.js";
 import {Tetromino} from "./tetromino/Tetromino.js";
 import {Score} from "./score/Score.js";
-import {EventKey} from "./EventKey.js";
-
-const KEY = EventKey;
+import {EventKey as KEY} from "./EventKey.js";
 
 export class Game {
   public intervalID: any;
@@ -57,16 +55,14 @@ export class Game {
   }
 
   public makePause(pauseElement: HTMLElement) {
-    console.log(this.isPause);
     if (this.isPause) {
       pauseElement.style.display = "none";
       this.autoMoveDown();
-      this.isPause = false;
     } else {
       pauseElement.style.display = "block";
       clearInterval(this.intervalID);
-      this.isPause = true;
     }
+    this.isPause = !this.isPause;
   }
 
   public controlsTetromino(e: string): void {
@@ -92,11 +88,7 @@ export class Game {
     this.autoMoveDown();
 
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
-      if (e.key === KEY.PAUSE) {
-        this.makePause(pauseElement);
-        return;
-      }
-      this.controlsTetromino(e.key);
+      e.key === KEY.PAUSE ? this.makePause(pauseElement) : this.controlsTetromino(e.key);
     });
   }
 }
