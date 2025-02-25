@@ -6,39 +6,36 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<div class="container">
-    <div class="start_mod">
-        <div class="pointer">|</div>
-        <div class="pointer">|</div>
-        <div class="pointer">|</div>
-        <div class="pointer">|</div>
-        <button type="button">START</button>
-    </div>
-    <div class="play_section">
-        <div id="pause" class="pause_not_active">PAUSE</div>
+<h1 class="game-name">Tetris</h1>
+<div class="container" id="container">
+    <div class="game-container">
+        <div class="pause-message" id="pause">PAUSED</div>
         <div id="main_field" class="field main_field"></div>
     </div>
-    <div class="score_section">
+    <div class="score-container">
         <div id="extra_field" class="field extra_field"></div>
-        <div  class="score">
-            <p class="text title">Score</p>
-            <p id="score" class="text info_number">0</p>
+        <div class="stats">
+            <p>Score: <span id="score">0</span></p>
+            <p>Level: <span id="level">0</span></p>
+            <p>Lines: <span id="lines">0</span></p>
         </div>
-        <div  class="score">
-            <p class="text title">Level</p>
-            <p id="level" class="text info_number">0</p>
+        <div class="controls">
+            <button type="button" class="control-button btn_rotate">Rotate</button>
+            <button type="button" class="control-button btn_left">Left</button>
+            <button type="button" class="control-button btn_right">Right</button>
+            <button type="button" class="control-button btn_down">Down</button>
+            <button type="button" class="control-button btn_pause">Pause</button>
         </div>
-        <div  class="score">
-            <p class="text title">Lines</p>
-            <p id="lines" class="text info_number">0</p>
-        </div>
-        <div class="buttons_block">
-            <button type="button" class="button btn_rotate">Rotate</button>
-            <button type="button" class="button btn_left">Left</button>
-            <button type="button" class="button btn_right">Right</button>
-            <button type="button" class="button btn_down">Down</button>
-            <button type="button" class="button btn_pause">Pause</button>
-        </div>
+    </div>
+    <div class="dialog" id="start_dialog">
+        <h2>Welcome to Tetris</h2>
+        <p>Use the keyboard controls:</p>
+        <p>← Left Arrow: Move left</p>
+        <p>→ Right Arrow: Move right</p>
+        <p>↑ Up Arrow: Rotate</p>
+        <p>↓ Down Arrow: Move down</p>
+        <p>p: Pause</p>
+        <button class="start-button" id="start_game_button">Start Game</button>
     </div>
 </div>
 </body>

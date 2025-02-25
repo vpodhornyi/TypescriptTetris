@@ -3,20 +3,33 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #4c504c;
-    background-image: url("./src/assets/images/background.jpg");
-    height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    backdrop-filter: blur(5px);
+    justify-content: center;
+    height: 100vh;
+    background-color: #1a1a1a;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.game-name {
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
 }
 
 .container {
     display: flex;
-    padding: 1vh;
+    gap: 20px;
     position: relative;
+}
+
+.game-container {
+    gap: 2px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative
 }
 
 .start_mod {
@@ -24,25 +37,21 @@ body {
     background-color: antiquewhite;
 }
 
-.pause {
-    display: block;
+.pause-message {
     position: absolute;
-    background-color: antiquewhite;
-    padding: 30px;
-    font-weight: bold;
-}
-
-.pause_not_active {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    text-align: center;
     display: none;
 }
 
-.play_section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.score_section {
+.score-container {
     margin: 0 5vh 0 100px;
     display: flex;
     flex-direction: column;
@@ -57,36 +66,65 @@ body {
 }
 
 .main_field {
+    display: grid;
     grid-template-columns: repeat(10, auto);
+    gap: 2px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .extra_field {
+    gap: 2px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 10px;
     grid-template-columns: repeat(6, auto);
 }
 
-.score {
+.stats {
     width: 100%;
-    margin-top: 15px;
-    background: rgba(15, 16, 19, 1);
+    text-align: left;
+}
+
+.stats > p {
+    margin: 1em 0;
+    font-size: 1.2rem;
 }
 
 .buttons_block {
     position: relative;
     margin-top: 15px;
-    height: 100%;
+    height: 30%;
     width: 100%;
 }
 
-.button {
-    position: absolute;
+.controls {
+    position: relative;
+    margin-top: 15px;
+    height: 30%;
+    width: 100%;
+}
+
+.control-button {
     padding: 10px 0;
-    font-weight: bold;
-    width: 70px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    width: 60px;
+}
+
+.control-button:hover {
+    background-color: #0056b3;
 }
 
 .btn_rotate {
     top: 15px;
-    left: calc(50% - 35px);
+    left: calc(50% - 30px);
 }
 
 .btn_left {
@@ -100,13 +138,13 @@ body {
 }
 
 .btn_down {
-    left: calc(50% - 35px);
+    left: calc(50% - 30px);
     top: calc(50% - 19px);
 }
 
 .btn_pause {
     bottom: 15px;
-    left: calc(50% - 35px);
+    left: calc(50% - 30px);
 }
 
 .text {
@@ -124,10 +162,9 @@ body {
 }
 
 .field > div {
-    height: min(4vh, 7vw);
-    width: min(4vh, 7vw);
-    background-color: rgba(15, 16, 19, 1);
-    /*border-radius: 0.5vh;*/
+    height: min(3vh, 6vw);
+    width: min(3vh, 6vw);
+    background-color: #444;
 }
 
 .block {
@@ -199,4 +236,34 @@ body {
     border-left-color: #cc0000;
     border-right-color: #cc0000;
     border-bottom-color: #4d0000;
+}
+
+.dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: block;
+}
+
+.dialog p {
+    margin: 10px 0;
+}
+
+.start-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.start-button:hover {
+    background-color: #0056b3;
 }

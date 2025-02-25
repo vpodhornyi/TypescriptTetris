@@ -5,12 +5,10 @@ import {Score} from "./score/Score.js";
 import {EventKey} from "./EventKey.js";
 
 const KEY = EventKey;
-const PAUSE_CLASS = "pause";
-const PAUSE_NOT_ACTIEVE_CLASS = "pause_not_active";
 
 export class Game {
-  private intervalID: any;
-  private isPause: boolean;
+  public intervalID: any;
+  public isPause: boolean;
   private readonly _mainField: Field;
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
@@ -51,47 +49,54 @@ export class Game {
     }
   }
 
-  private autoMoveDown() {
+  public autoMoveDown() {
     this.intervalID = setInterval(() => {
       this.moveTetrominoDown();
       this.drawMainField();
     }, this._score.speed)
   }
 
-  public play(pauseElement: Element): void {
+  public makePause(pauseElement: HTMLElement) {
+    console.log(this.isPause);
+    if (this.isPause) {
+      pauseElement.style.display = "none";
+      this.autoMoveDown();
+      this.isPause = false;
+    } else {
+      pauseElement.style.display = "block";
+      clearInterval(this.intervalID);
+      this.isPause = true;
+    }
+  }
+
+  public controlsTetromino(e: string): void {
+    switch (e) {
+      case KEY.UP:
+        this.mainTetromino.rotate(this._mainField);
+        break;
+      case KEY.LEFT:
+        this.mainTetromino.moveLeft(this._mainField);
+        break;
+      case KEY.RIGHT:
+        this.mainTetromino.moveRight(this._mainField);
+        break;
+      case KEY.DOWN:
+        this.moveTetrominoDown();
+    }
+    this.drawMainField();
+  }
+
+  public play(pauseElement: HTMLElement): void {
     this._extraField.addTetromino(this.nextTetromino);
     this._mainField.addTetromino(this.mainTetromino);
     this.autoMoveDown();
 
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
-      if (e.key === KEY.BACKSPACE) {
-        if (this.isPause) {
-          pauseElement.className = PAUSE_NOT_ACTIEVE_CLASS;
-          this.autoMoveDown();
-          this.isPause = false;
-        } else {
-          pauseElement.className = PAUSE_CLASS;
-          clearInterval(this.intervalID);
-          this.isPause = true;
-        }
+      if (e.key === KEY.PAUSE) {
+        this.makePause(pauseElement);
+        return;
       }
-
-      if (!this.isPause) {
-        switch (e.key) {
-          case KEY.UP:
-            this.mainTetromino.rotate(this._mainField);
-            break;
-          case KEY.LEFT:
-            this.mainTetromino.moveLeft(this._mainField);
-            break;
-          case KEY.RIGHT:
-            this.mainTetromino.moveRight(this._mainField);
-            break;
-          case KEY.DOWN:
-            this.moveTetrominoDown();
-        }
-        this.drawMainField();
-      }
+      this.controlsTetromino(e.key);
     });
   }
 }
