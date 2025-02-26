@@ -10,15 +10,17 @@ export class Game {
   private readonly _mainField: Field;
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
+  private readonly _gameOvertDialog: HTMLElement;
   private readonly _score: Score;
   private mainTetromino: Tetromino;
   private nextTetromino: Tetromino;
 
-  constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList, score: Score) {
+  constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList, score: Score, gameOvertDialog: HTMLElement) {
     this.isPause = false;
     this._mainField = mainField;
     this._extraField = extraField;
     this._tetrominoList = tetrominoList;
+    this._gameOvertDialog = gameOvertDialog;
     this._score = score;
     this.mainTetromino = this._tetrominoList.getRandomTetromino();
     this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
@@ -27,12 +29,18 @@ export class Game {
   private moveTetrominoDown(): void {
     if (this.mainTetromino.moveDown(this._mainField)) {
       this._mainField.placeTetromino(this.mainTetromino);
-      this.mainTetromino = this.nextTetromino;
-      this._mainField.addTetromino(this.mainTetromino);
 
-      this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
-      this._extraField.clearField();
-      this._extraField.addTetromino(this.nextTetromino);
+      if (this._mainField.isGameOver()) {
+        clearInterval(this.intervalID);
+        this._gameOvertDialog.style.display = 'block';
+      } else {
+        this.mainTetromino = this.nextTetromino;
+        this._mainField.addTetromino(this.mainTetromino);
+
+        this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
+        this._extraField.clearField();
+        this._extraField.addTetromino(this.nextTetromino);
+      }
     }
   }
 
@@ -47,14 +55,14 @@ export class Game {
     }
   }
 
-  public autoMoveDown() {
+  private autoMoveDown(): void {
     this.intervalID = setInterval(() => {
       this.moveTetrominoDown();
       this.drawMainField();
     }, this._score.speed)
   }
 
-  public makePause(pauseElement: HTMLElement) {
+  public makePause(pauseElement: HTMLElement): void {
     if (this.isPause) {
       pauseElement.style.display = "none";
       this.autoMoveDown();
@@ -82,13 +90,25 @@ export class Game {
     this.drawMainField();
   }
 
-  public play(pauseElement: HTMLElement): void {
-    this._extraField.addTetromino(this.nextTetromino);
-    this._mainField.addTetromino(this.mainTetromino);
-    this.autoMoveDown();
-
+  public init(pauseElement: HTMLElement): void {
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
       e.key === KEY.PAUSE ? this.makePause(pauseElement) : this.controlsTetromino(e.key);
     });
+  }
+
+  public play(): void {
+    this._extraField.addTetromino(this.nextTetromino);
+    this._mainField.addTetromino(this.mainTetromino);
+    this.autoMoveDown();
+  }
+
+  public reset(): void {
+    this._mainField.clearField();
+    this._mainField.resetField()
+    this._extraField.clearField();
+    this._extraField.resetField();
+    this._score.reset();
+    this.mainTetromino = this._tetrominoList.getRandomTetromino();
+    this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
   }
 }

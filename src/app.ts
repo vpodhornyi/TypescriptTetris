@@ -22,6 +22,7 @@ const CELLS_SELECTOR_EXTRA: string = '#extra_field div';
 
 const container = document.querySelector('#container') as HTMLElement;
 const startDialog = document.querySelector('#start_dialog') as HTMLElement;
+const gameOvertDialog = document.querySelector('#game_over_dialog') as HTMLElement;
 const main_field = document.querySelector('#main_field') as HTMLElement;
 const extra_field = document.querySelector('#extra_field') as HTMLElement;
 const score = document.querySelector('#score') as HTMLElement;
@@ -39,14 +40,21 @@ const tetrominoList: TetrominoList = new TetrominoList();
 const scoreLevelLines: Score = new Score(score, level, lines,
   START_SCORE, START_LEVEL, START_SPEED, SCORE_STEP, SPEED_STEP, LEVEL_STEP,
   SCORE_LEVEL_INCREASE);
-const game: Game = new Game(mainField, extraField, tetrominoList, scoreLevelLines);
+const game: Game = new Game(mainField, extraField, tetrominoList, scoreLevelLines, gameOvertDialog);
+game.init(pause);
 
 container.addEventListener('click', (event: Event) => {
   const eventElement = event.target as HTMLElement;
 
   if (isClickBtn(eventElement, 'start-button')) {
-    startDialog.style.display = "none"
-    game.play(pause);
+    startDialog.style.display = "none";
+    game.play();
+  }
+
+  if (isClickBtn(eventElement, 'game-over-button')) {
+    gameOvertDialog.style.display = "none";
+    startDialog.style.display = "block"
+    game.reset();
   }
 
   if (isClickBtn(eventElement, 'btn_rotate')) game.controlsTetromino(KEY.UP);

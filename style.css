@@ -177,64 +177,50 @@ body {
 
 .I.block {
     background: #00ffff;
-    border: 5px solid #00ffff;
+    border: 5px solid #00cccc;
     border-top-color: #b3ffff;
-    border-left-color: #00cccc;
-    border-right-color: #00cccc;
     border-bottom-color: #004c4d;
 }
 
 .O.block {
     background: #ffff00;
-    border: 5px solid #ffff00;
+    border: 5px solid #cccc00;
     border-top-color: #ffffb3;
-    border-left-color: #cccc00;
-    border-right-color: #cccc00;
     border-bottom-color: #4c4d00;
 }
 
 .T.block {
     background: #aa00ff;
-    border: 5px solid #aa00ff;
+    border: 5px solid #8800cc;
     border-top-color: #e6b3ff;
-    border-left-color: #8800cc;
-    border-right-color: #8800cc;
     border-bottom-color: #33004d;
 }
 
 .J.block {
     background: #0000ff;
-    border: 5px solid #0000ff;
+    border: 5px solid #0000cc;
     border-top-color: #b3b3ff;
-    border-left-color: #0000cc;
-    border-right-color: #0000cc;
     border-bottom-color: #00004d;
 }
 
 .L.block {
     background: #ffaa00;
-    border: 5px solid #ffaa00;
+    border: 5px solid #cc8800;
     border-top-color: #ffe6b3;
-    border-left-color: #cc8800;
-    border-right-color: #cc8800;
     border-bottom-color: #4d3300;
 }
 
 .S.block {
     background: #00ff00;
-    border: 5px solid #00ff00;
+    border: 5px solid #00cc00;
     border-top-color: #b3ffb3;
-    border-left-color: #00cc00;
-    border-right-color: #00cc00;
     border-bottom-color: #004d00;
 }
 
 .Z.block {
     background: #ff0000;
-    border: 5px solid #ff0000;
+    border: 5px solid #cc0000;
     border-top-color: #ffb3b3;
-    border-left-color: #cc0000;
-    border-right-color: #cc0000;
     border-bottom-color: #4d0000;
 }
 
@@ -250,11 +236,15 @@ body {
     display: block;
 }
 
+.dialog-game-over {
+    display: none;
+}
+
 .dialog p {
     margin: 10px 0;
 }
 
-.start-button {
+.dialog-button {
     padding: 10px 20px;
     background-color: #007bff;
     border: none;
@@ -262,6 +252,7 @@ body {
     font-size: 1rem;
     cursor: pointer;
     border-radius: 5px;
+    margin-top: 15px;
 }
 
 .start-button:hover {

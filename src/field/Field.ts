@@ -81,7 +81,7 @@ export abstract class Field {
       if (score.isNewLevel()) {
         score.setLevel();
       }
-      return  true
+      return true
     }
     return false;
   }
@@ -92,7 +92,7 @@ export abstract class Field {
       let columnsCaunt: number = this._columns;
       for (let column: number = 0; column < this._columns; column++) {
 
-        if (this._playFieldArr[row][column] == 0) continue;
+        if (this._playFieldArr[row][column] === 0) continue;
 
         columnsCaunt -= 1;
 
@@ -101,6 +101,17 @@ export abstract class Field {
 
         this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
         res = this.deleteFullRows(columnsCaunt === 0, score, row);
+      }
+    }
+    return res;
+  }
+
+  public isGameOver(): boolean {
+    let res = false;
+    for (let column: number = 0; column < this._columns; column++) {
+      if (this._playFieldArr[0][column] !== 0) {
+        res = true;
+        break;
       }
     }
     return res;
@@ -115,10 +126,15 @@ export abstract class Field {
     for (let row: number = 0; row < tetromino.matrixLength; row++) {
       for (let column: number = 0; column < tetromino.matrixLength; column++) {
         if (tetromino.matrix[row][column]) {
-          this._playFieldArr[tetromino.row + row][tetromino.column + column] = tetromino.name;
+          this._playFieldArr[tetromino.row + row] && (this._playFieldArr[tetromino.row + row][tetromino.column + column] = tetromino.name);
         }
       }
     }
+  }
+
+  public resetField(): void {
+    this._playFieldArr.forEach(arr => arr.fill(0)
+      .map(() => new Array(this._columns).fill(0)))
   }
 
   private generateField(el: Element): void {

@@ -1,5 +1,5 @@
-import { TetrominoName } from "./TetrominoName.js";
-import { Field } from "../field/Field";
+import {TetrominoName} from "./TetrominoName.js";
+import {Field} from "../field/Field";
 
 
 export class Tetromino {
@@ -97,15 +97,15 @@ export class Tetromino {
 
   public isOutsideOfGameboard(row: number, column: number, field: Field) {
     return this._matrix[row][column] &&
-        (
-            this._column + column < 0
-            || this._column + column >= field.columns
-            || this._row + row >= field.rows
-        );
+      (
+        this._column + column < 0
+        || this._column + column >= field.columns
+        || this._row + row >= field.rows
+      );
   }
 
   public hasCollisions(row: number, column: number, field: Field) {
     return this._matrix[row][column]
-        && field.playFieldArr[this._row + row] && field.playFieldArr[this._row + row][this._column + column];
+      && field.playFieldArr[this._row + row] && field.playFieldArr[this._row + row][this._column + column];
   }
 }

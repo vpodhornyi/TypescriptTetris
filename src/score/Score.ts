@@ -59,4 +59,13 @@ export class Score {
     this._speed -= this._speedStep;
     this._levelElement.innerHTML = String(this._level);
   }
+
+  public reset(): void {
+    this._score = 0;
+    this._level = 1;
+    this._speed = 1000;
+    this.setLines(0);
+    this._levelElement.innerHTML = String(this._level);;
+    this._scoreElement.innerHTML = String(this._score);
+  }
 }
