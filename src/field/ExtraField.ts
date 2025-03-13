@@ -1,10 +1,11 @@
 import {Field} from "./Field.js";
 import {Tetromino} from "../tetromino/Tetromino.js";
+import {Config} from "../Config.js";
 
 export class ExtraField extends Field {
 
-  constructor(root: Element, rows: number, columns: number, cellSelector: string) {
-    super(root, rows, columns, cellSelector);
+  constructor(root: Element, config: typeof Config) {
+    super(root, config.EXTRA_FIELD_ROWS, config.EXTRA_FIELD_COLUMNS, config.CELLS_SELECTOR_EXTRA);
   }
 
   protected setToCenter(tetromino: Tetromino) {

@@ -1,3 +1,5 @@
+import {Config} from "../Config.js";
+
 export class Score {
   private _scoreElement: Element;
   private _levelElement: Element;
@@ -11,21 +13,18 @@ export class Score {
   private readonly _scoreLevelIncrease: number;
 
 
-  constructor(score: Element, level: Element, lines: Element,
-              startScore: number, startLevel: number, startSpeed: number,
-              scoreStep: number, speedStep: number, levelStep: number,
-              scoreLevelIncrease: number) {
+  constructor(score: Element, level: Element, lines: Element, config: typeof Config) {
     this._scoreElement = score;
     this._levelElement = level;
     this._linesElement = lines;
-    this._score = startScore;
-    this._level = startLevel;
-    level.innerHTML = startLevel.toString();
-    this._speed = startSpeed;
-    this._scoreStep = scoreStep;
-    this._speedStep = speedStep;
-    this._levelStep = levelStep;
-    this._scoreLevelIncrease = scoreLevelIncrease;
+    this._score = config.START_SCORE;
+    this._level = config.START_LEVEL;
+    level.innerHTML = config.START_LEVEL.toString();
+    this._speed = config.START_SPEED;
+    this._scoreStep = config.SCORE_STEP;
+    this._speedStep = config.SPEED_STEP;
+    this._levelStep = config.LEVEL_STEP;
+    this._scoreLevelIncrease = config.SCORE_LEVEL_INCREASE;
     this.setLines(0);
   }
 
@@ -65,7 +64,8 @@ export class Score {
     this._level = 1;
     this._speed = 1000;
     this.setLines(0);
-    this._levelElement.innerHTML = String(this._level);;
+    this._levelElement.innerHTML = String(this._level);
+    ;
     this._scoreElement.innerHTML = String(this._score);
   }
 }
