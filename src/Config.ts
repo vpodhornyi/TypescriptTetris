@@ -12,4 +12,13 @@ export enum Config {
   EXTRA_FIELD_COLUMNS = 6,
   CELLS_SELECTOR_MAIN = '#main_field div',
   CELLS_SELECTOR_EXTRA = '#extra_field div',
+  CONTAINER_SELECTOR = '#container',
+  START_DIALOG_SELECTOR = '#start_dialog',
+  GAME_OVER_DIALOG_SELECTOR = '#game_over_dialog',
+  MAIN_FIELD_SELECTOR = '#main_field',
+  EXTRA_FIELD_SELECTOR = '#extra_field',
+  SCORE_SELECTOR = '#score',
+  LEVEL_SELECTOR = '#level',
+  LINES_SELECTOR = '#lines',
+  PAUSE_SELECTOR = '#pause',
 }

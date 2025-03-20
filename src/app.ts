@@ -6,6 +6,7 @@ import {Game} from "./Game.js";
 import {Score} from "./score/Score.js";
 import {EventKey as KEY} from "./EventKey.js";
 import {Config as config} from './Config.js';
+import {Elements} from './Elements.js';
 
 const container = document.querySelector('#container') as HTMLElement;
 const startDialog = document.querySelector('#start_dialog') as HTMLElement;
@@ -28,6 +29,9 @@ const scoreLevelLines: Score = new Score(score, level, lines, config);
 const game: Game = new Game(mainField, extraField, tetrominoList, scoreLevelLines, gameOvertDialog);
 game.init(pause);
 
+const elements: Elements = Elements.getElements(config);
+console.log(elements);
+
 container.addEventListener('click', (event: Event) => {
   const eventElement = event.target as HTMLElement;
 
@@ -38,7 +42,7 @@ container.addEventListener('click', (event: Event) => {
 
   if (isClickBtn(eventElement, 'game-over-button')) {
     gameOvertDialog.style.display = "none";
-    startDialog.style.display = "block"
+    startDialog.style.display = "block";
     game.reset();
   }
 
