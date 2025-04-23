@@ -6,20 +6,16 @@ import {Game} from "./Game.js";
 import {Score} from "./score/Score.js";
 import {EventKey as KEY} from "./EventKey.js";
 import {Config as config} from './Config.js';
-import {Elements} from './Elements.js';
 
-const container = document.querySelector('#container') as HTMLElement;
-const startDialog = document.querySelector('#start_dialog') as HTMLElement;
-const gameOvertDialog = document.querySelector('#game_over_dialog') as HTMLElement;
+const container = document.querySelector(config.CONTAINER) as HTMLElement;
+const startDialog = document.querySelector(config.START_DIALOG) as HTMLElement;
+const gameOvertDialog = document.querySelector(config.GAME_OVER_DIALOG) as HTMLElement;
 const main_field = document.querySelector('#main_field') as HTMLElement;
 const extra_field = document.querySelector('#extra_field') as HTMLElement;
 const score = document.querySelector('#score') as HTMLElement;
 const level = document.querySelector('#level') as HTMLElement;
 const lines = document.querySelector('#lines') as HTMLElement;
 const pause = document.querySelector('#pause') as HTMLElement;
-
-const elements: Elements = Elements.getElements(config);
-console.log(elements);
 
 function isClickBtn(e: HTMLElement, className: string): boolean {
   return e?.classList.contains(className);
