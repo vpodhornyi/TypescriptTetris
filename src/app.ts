@@ -18,6 +18,9 @@ const level = document.querySelector('#level') as HTMLElement;
 const lines = document.querySelector('#lines') as HTMLElement;
 const pause = document.querySelector('#pause') as HTMLElement;
 
+const elements: Elements = Elements.getElements(config);
+console.log(elements);
+
 function isClickBtn(e: HTMLElement, className: string): boolean {
   return e?.classList.contains(className);
 }
@@ -28,9 +31,6 @@ const tetrominoList: TetrominoList = new TetrominoList();
 const scoreLevelLines: Score = new Score(score, level, lines, config);
 const game: Game = new Game(mainField, extraField, tetrominoList, scoreLevelLines, gameOvertDialog);
 game.init(pause);
-
-const elements: Elements = Elements.getElements(config);
-console.log(elements);
 
 container.addEventListener('click', (event: Event) => {
   const eventElement = event.target as HTMLElement;
