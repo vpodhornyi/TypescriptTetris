@@ -6,10 +6,12 @@ import {Game} from "./Game.js";
 import {Score} from "./score/Score.js";
 import {EventKey as KEY} from "./EventKey.js";
 import {Config as config} from './Config.js';
+// import conf from './config.json';
+// console.log(conf);
 
-const container = document.querySelector(config.CONTAINER) as HTMLElement;
-const startDialog = document.querySelector(config.START_DIALOG) as HTMLElement;
-const gameOvertDialog = document.querySelector(config.GAME_OVER_DIALOG) as HTMLElement;
+const container = document.querySelector(config.CONTAINER_SELECTOR) as HTMLElement;
+const startDialog = document.querySelector(config.START_DIALOG_SELECTOR) as HTMLElement;
+const gameOvertDialog = document.querySelector(config.GAME_OVER_DIALOG_SELECTOR) as HTMLElement;
 const main_field = document.querySelector('#main_field') as HTMLElement;
 const extra_field = document.querySelector('#extra_field') as HTMLElement;
 const score = document.querySelector('#score') as HTMLElement;

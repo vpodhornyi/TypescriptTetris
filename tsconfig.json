@@ -11,7 +11,8 @@
     "sourceMap": false,
     "noEmitOnError": true,
     "moduleResolution": "node",
-    "preserveConstEnums": true
+    "preserveConstEnums": true,
+    "resolveJsonModule": true,
   },
   "include": [
     "src"
