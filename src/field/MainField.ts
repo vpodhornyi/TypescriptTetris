@@ -1,11 +1,11 @@
 import {Field} from "./Field.js";
 import {Tetromino} from "../tetromino/Tetromino";
-import {Config} from "../Config.js";
+import {TetrisConfig} from "../config/TetrisConfig.js";
 
 export class MainField extends Field {
 
-  constructor(root: Element, config: typeof Config) {
-    super(root, config.MAIN_FIELD_ROWS, config.MAIN_FIELD_COLUMNS, config.CELLS_SELECTOR_MAIN);
+  constructor(root: Element, config: TetrisConfig) {
+    super(root, config.mainFieldRows, config.mainFieldColumns, config.cellsMain);
   }
 
   protected setToCenter(tetromino: Tetromino) {

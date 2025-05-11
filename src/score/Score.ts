@@ -1,4 +1,5 @@
-import {Config} from "../Config.js";
+import {UIManager} from "../UIManager.js";
+import {TetrisConfig} from "../config/TetrisConfig.js";
 
 export class Score {
   private _scoreElement: Element;
@@ -13,19 +14,19 @@ export class Score {
   private readonly _scoreLevelIncrease: number;
 
 
-  constructor(score: Element, level: Element, lines: Element, config: typeof Config) {
-    this._scoreElement = score;
-    this._levelElement = level;
-    this._linesElement = lines;
-    this._score = config.START_SCORE;
-    this._level = config.START_LEVEL;
-    level.innerHTML = config.START_LEVEL.toString();
-    this._speed = config.START_SPEED;
-    this._scoreStep = config.SCORE_STEP;
-    this._speedStep = config.SPEED_STEP;
-    this._levelStep = config.LEVEL_STEP;
-    this._scoreLevelIncrease = config.SCORE_LEVEL_INCREASE;
-    this.setLines(0);
+  constructor(ui: UIManager, config: TetrisConfig) {
+    this._scoreElement = ui.score;
+    this._levelElement = ui.level;
+    this._linesElement = ui.lines;
+    this._score = config.startScore;
+    this._level = config.startLevel;
+    ui.level.innerHTML = config.startLevel.toString();
+    this._speed = config.startSpeed;
+    this._scoreStep = config.scoreStep;
+    this._speedStep = config.speedStep;
+    this._levelStep = config.levelStep;
+    this._scoreLevelIncrease = config.scoreLevelIncrease;
+    this.setLines(config.startLines);
   }
 
   get score(): number {
@@ -59,13 +60,12 @@ export class Score {
     this._levelElement.innerHTML = String(this._level);
   }
 
-  public reset(): void {
-    this._score = 0;
-    this._level = 1;
-    this._speed = 1000;
-    this.setLines(0);
+  public reset(config: TetrisConfig): void {
+    this._score = config.startScore;
+    this._level = config.startLevel;
+    this._speed = config.startSpeed;
+    this.setLines(config.startLines);
     this._levelElement.innerHTML = String(this._level);
-    ;
     this._scoreElement.innerHTML = String(this._score);
   }
 }

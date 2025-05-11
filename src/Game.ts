@@ -1,8 +1,11 @@
-import {Field} from "./field/Field";
+import {Field} from "./field/Field.js";
+import {MainField} from "./field/MainField.js";
+import {ExtraField} from "./field/ExtraField.js";
 import {TetrominoList} from "./tetromino/TetrominoList.js";
 import {Tetromino} from "./tetromino/Tetromino.js";
 import {Score} from "./score/Score.js";
-import {EventKey as KEY} from "./EventKey.js";
+import {TetrisConfig} from "./config/TetrisConfig.js";
+import {UIManager} from "./UIManager.js";
 
 export class Game {
   public intervalID: any;
@@ -10,29 +13,31 @@ export class Game {
   private readonly _mainField: Field;
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
-  private readonly _gameOvertDialog: HTMLElement;
+  private readonly _ui: UIManager;
+  private readonly _gameOverDialog: HTMLElement;
   private readonly _score: Score;
   private mainTetromino: Tetromino;
   private nextTetromino: Tetromino;
 
-  constructor(mainField: Field, extraField: Field, tetrominoList: TetrominoList, score: Score, gameOvertDialog: HTMLElement) {
+  constructor(ui: UIManager, config: TetrisConfig) {
     this.isPause = false;
-    this._mainField = mainField;
-    this._extraField = extraField;
-    this._tetrominoList = tetrominoList;
-    this._gameOvertDialog = gameOvertDialog;
-    this._score = score;
+    this._mainField = new MainField(ui.mainField, config);
+    this._extraField = new ExtraField(ui.extraField, config);
+    this._tetrominoList = new TetrominoList();
+    this._ui = ui;
+    this._gameOverDialog = ui.gameOverDialog;
+    this._score = new Score(ui, config);
     this.mainTetromino = this._tetrominoList.getRandomTetromino();
     this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
   }
 
-  private moveTetrominoDown(): void {
+  public moveTetrominoDown(): void {
     if (this.mainTetromino.moveDown(this._mainField)) {
       this._mainField.placeTetromino(this.mainTetromino);
 
       if (this._mainField.isGameOver()) {
         clearInterval(this.intervalID);
-        this._gameOvertDialog.style.display = 'block';
+        this._gameOverDialog.style.display = 'block';
       } else {
         this.mainTetromino = this.nextTetromino;
         this._mainField.addTetromino(this.mainTetromino);
@@ -62,37 +67,52 @@ export class Game {
     }, this._score.speed)
   }
 
-  public makePause(pauseElement: HTMLElement): void {
+  public makePause(): void {
     if (this.isPause) {
-      pauseElement.style.display = "none";
+      this._ui.pause.style.display = "none";
       this.autoMoveDown();
     } else {
-      pauseElement.style.display = "block";
+      this._ui.pause.style.display = "block";
       clearInterval(this.intervalID);
     }
     this.isPause = !this.isPause;
   }
 
-  public controlsTetromino(e: string): void {
+  public roatateTetromino(): void {
+    this.mainTetromino.rotate(this._mainField);
+    this.drawMainField();
+  }
+
+  public moveTetrominoLeft(): void {
+    this.mainTetromino.moveLeft(this._mainField);
+    this.drawMainField();
+  }
+
+  public moveTetrominoReght(): void {
+    this.mainTetromino.moveRight(this._mainField);
+    this.drawMainField();
+  }
+
+  public controlsTetromino(e: string, config: TetrisConfig): void {
     switch (e) {
-      case KEY.UP:
+      case config.UP:
         this.mainTetromino.rotate(this._mainField);
         break;
-      case KEY.LEFT:
+      case config.LEFT:
         this.mainTetromino.moveLeft(this._mainField);
         break;
-      case KEY.RIGHT:
+      case config.RIGHT:
         this.mainTetromino.moveRight(this._mainField);
         break;
-      case KEY.DOWN:
+      case config.DOWN:
         this.moveTetrominoDown();
     }
     this.drawMainField();
   }
 
-  public init(pauseElement: HTMLElement): void {
+  public init(config: TetrisConfig): void {
     document.addEventListener("keydown", (e: KeyboardEvent): void => {
-      e.key === KEY.PAUSE ? this.makePause(pauseElement) : this.controlsTetromino(e.key);
+      e.key === config.PAUSE ? this.makePause() : this.controlsTetromino(e.key, config);
     });
   }
 
@@ -102,12 +122,12 @@ export class Game {
     this.autoMoveDown();
   }
 
-  public reset(): void {
+  public reset(config: TetrisConfig): void {
     this._mainField.clearField();
     this._mainField.resetField()
     this._extraField.clearField();
     this._extraField.resetField();
-    this._score.reset();
+    this._score.reset(config);
     this.mainTetromino = this._tetrominoList.getRandomTetromino();
     this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
   }
