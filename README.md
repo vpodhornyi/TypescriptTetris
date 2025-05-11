@@ -17,6 +17,7 @@ A simple implementation of the classic **Tetris** game using **TypeScript** and 
 ---
 
 ## Project Structure
+```plaintext
 /
 ├── index.html # Main HTML layout
 ├── app.js # Compiled TypeScript logic
