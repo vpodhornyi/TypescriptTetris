@@ -1,0 +1,21 @@
+# Tetris Game 🎮
+
+A simple implementation of the classic **Tetris** game using **TypeScript** and plain **HTML/CSS** — no frameworks, no canvas, no build tools.
+
+🌐 **Live Demo**: [Play Tetris](https://your-username.github.io/your-repo-name/)
+
+---
+
+## Features
+
+- 🧱 Classic Tetris mechanics
+- 🔧 Fully configurable via `config.json`
+- 🧩 Dynamic HTML rendering (no `<canvas>`)
+- 💡 Modular and clean TypeScript codebase
+- 🎮 Keyboard controls for playing
+- 🚀 Easy deployment with GitHub Pages
+
+---
+
+## Project Structure
+
