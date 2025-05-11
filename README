@@ -9,7 +9,6 @@ A simple implementation of the classic **Tetris** game using **TypeScript** and 
 ## Features
 
 - 🧱 Classic Tetris mechanics
-- 🔧 Fully configurable via `config.json`
 - 🧩 Dynamic HTML rendering (no `<canvas>`)
 - 💡 Modular and clean TypeScript codebase
 - 🎮 Keyboard controls for playing
