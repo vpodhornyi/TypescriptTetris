@@ -1,0 +1,25 @@
+export var Config;
+(function (Config) {
+    Config[Config["START_SCORE"] = 0] = "START_SCORE";
+    Config[Config["START_LEVEL"] = 1] = "START_LEVEL";
+    Config[Config["START_SPEED"] = 1000] = "START_SPEED";
+    Config[Config["SCORE_STEP"] = 100] = "SCORE_STEP";
+    Config[Config["SPEED_STEP"] = 25] = "SPEED_STEP";
+    Config[Config["LEVEL_STEP"] = 1] = "LEVEL_STEP";
+    Config[Config["SCORE_LEVEL_INCREASE"] = 500] = "SCORE_LEVEL_INCREASE";
+    Config[Config["MAIN_FIELD_ROWS"] = 20] = "MAIN_FIELD_ROWS";
+    Config[Config["MAIN_FIELD_COLUMNS"] = 10] = "MAIN_FIELD_COLUMNS";
+    Config[Config["EXTRA_FIELD_ROWS"] = 6] = "EXTRA_FIELD_ROWS";
+    Config[Config["EXTRA_FIELD_COLUMNS"] = 6] = "EXTRA_FIELD_COLUMNS";
+    Config["CELLS_SELECTOR_MAIN"] = "#main_field div";
+    Config["CELLS_SELECTOR_EXTRA"] = "#extra_field div";
+    Config["CONTAINER_SELECTOR"] = "#container";
+    Config["START_DIALOG_SELECTOR"] = "#start_dialog";
+    Config["GAME_OVER_DIALOG_SELECTOR"] = "#game_over_dialog";
+    Config["MAIN_FIELD_SELECTOR"] = "#main_field";
+    Config["EXTRA_FIELD_SELECTOR"] = "#extra_field";
+    Config["SCORE_SELECTOR"] = "#score";
+    Config["LEVEL_SELECTOR"] = "#level";
+    Config["LINES_SELECTOR"] = "#lines";
+    Config["PAUSE_SELECTOR"] = "#pause";
+})(Config || (Config = {}));
