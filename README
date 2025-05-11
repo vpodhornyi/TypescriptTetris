@@ -18,4 +18,8 @@ A simple implementation of the classic **Tetris** game using **TypeScript** and 
 ---
 
 ## Project Structure
-
+/
+├── index.html # Main HTML layout
+├── app.js # Compiled TypeScript logic
+├── style.css # Styling for the UI and game field
+└── docs/ # GitHub Pages deployment folder
