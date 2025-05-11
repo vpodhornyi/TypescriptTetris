@@ -31,7 +31,7 @@ export class Game {
     this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
   }
 
-  public moveTetrominoDown(): void {
+  private moveTetrominoDown(): void {
     if (this.mainTetromino.moveDown(this._mainField)) {
       this._mainField.placeTetromino(this.mainTetromino);
 
@@ -90,6 +90,11 @@ export class Game {
 
   public moveTetrominoReght(): void {
     this.mainTetromino.moveRight(this._mainField);
+    this.drawMainField();
+  }
+
+  public moveTetrominoDownRedrawField(): void {
+    this.moveTetrominoDown();
     this.drawMainField();
   }
 
