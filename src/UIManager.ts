@@ -91,7 +91,7 @@ export class UIManager {
       if (this.isClickBtn(eventElement, 'btn_rotate')) game.roatateTetromino();
       if (this.isClickBtn(eventElement, 'btn_left')) game.moveTetrominoLeft();
       if (this.isClickBtn(eventElement, 'btn_right')) game.moveTetrominoReght();
-      if (this.isClickBtn(eventElement, 'btn_down')) game.moveTetrominoDown();
+      if (this.isClickBtn(eventElement, 'btn_down')) game.moveTetrominoDownRedrawField();
       if (this.isClickBtn(eventElement, 'btn_pause')) game.makePause();
     })
   }
