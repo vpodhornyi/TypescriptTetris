@@ -1,4 +1,5 @@
-import { Tetromino } from "../tetromino/Tetromino.js";
+import {Tetromino} from "../tetromino/Tetromino.js";
+import {Score} from "../score/Score.js";
 
 const DIV: string = 'div';
 const CLASS_TETROMINO: string = 'block';
@@ -10,16 +11,18 @@ export abstract class Field {
   private readonly _amount: number;
   private readonly _playFieldArr: Array<Array<any>>;
   private readonly cells: Array<Element>;
+  private _rowCount: number;
 
   protected constructor(root: Element, rows: number, columns: number, cellSelector: string) {
     this._rows = rows;
     this._columns = columns;
     this._playFieldArr = new Array(this._rows)
-        .fill(0)
-        .map(() => new Array(this._columns).fill(0));
+      .fill(0)
+      .map(() => new Array(this._columns).fill(0));
     this._amount = this._rows * this._columns;
     this.generateField(root);
     this.cells = Array.from(document.querySelectorAll(cellSelector));
+    this._rowCount = 0;
   }
 
   get rows(): number {
@@ -51,46 +54,67 @@ export abstract class Field {
         if (!tetromino.matrix[r][c]) continue;
 
         const cellIndex = this.convertPositionToIndex(tetromino.row + r, tetromino.column + c);
-        this.cells[cellIndex].classList.add(tetromino.name, CLASS_TETROMINO);
+        this.cells[cellIndex] && this.cells[cellIndex].classList.add(tetromino.name, CLASS_TETROMINO);
       }
     }
   }
 
-  private deleteFullRows(): void {
-    for (let row: number = 0; row < this._rows; row++) {
-      for (let column: number = 0; column < this._columns; column++) {
+  private deleteFullRows(isFullRow: boolean, score: Score, row: number): boolean {
+    if (isFullRow) {
+      this._playFieldArr.splice(row, 1);
+      this._playFieldArr.unshift(new Array(this._columns).fill(0));
+      this.clearField();
+      for (let row: number = 0; row < this._rows; row++) {
+        for (let column: number = 0; column < this._columns; column++) {
 
-        if (this._playFieldArr[row][column] == 0) continue;
+          if (this._playFieldArr[row][column] == 0) continue;
 
-        const name = this._playFieldArr[row][column];
-        const cellIndex: number = this.convertPositionToIndex(row, column);
-        this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
-      }
-    }
-  }
-
-  public drawField(): void {
-    for (let row: number = 0; row < this._rows; row++) {
-      let fullRow: number = this._columns;
-      for (let column: number = 0; column < this._columns; column++) {
-
-        if (this._playFieldArr[row][column] == 0) continue;
-
-        fullRow -= 1;
-
-        const name = this._playFieldArr[row][column];
-        const cellIndex: number = this.convertPositionToIndex(row, column);
-
-        this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
-
-        if (!fullRow) {
-          this._playFieldArr.splice(row, 1);
-          this._playFieldArr.unshift(new Array(this._columns).fill(0));
-          this.clearField();
-          this.deleteFullRows();
+          const name = this._playFieldArr[row][column];
+          const cellIndex: number = this.convertPositionToIndex(row, column);
+          this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
         }
       }
+      this._rowCount += 1;
+      score.setLines(this._rowCount);
+      score.setScore();
+
+      if (score.isNewLevel()) {
+        score.setLevel();
+      }
+      return true
     }
+    return false;
+  }
+
+  public drawField(score: Score): boolean {
+    let res = false
+    for (let row: number = 0; row < this._rows; row++) {
+      let columnsCaunt: number = this._columns;
+      for (let column: number = 0; column < this._columns; column++) {
+
+        if (this._playFieldArr[row][column] === 0) continue;
+
+        columnsCaunt -= 1;
+
+        const name = this._playFieldArr[row][column];
+        const cellIndex: number = this.convertPositionToIndex(row, column);
+
+        this.cells[cellIndex].classList.add(name, CLASS_TETROMINO);
+        res = this.deleteFullRows(columnsCaunt === 0, score, row);
+      }
+    }
+    return res;
+  }
+
+  public isGameOver(): boolean {
+    let res = false;
+    for (let column: number = 0; column < this._columns; column++) {
+      if (this._playFieldArr[0][column] !== 0) {
+        res = true;
+        break;
+      }
+    }
+    return res;
   }
 
   public addTetromino(tetromino: Tetromino) {
@@ -102,10 +126,15 @@ export abstract class Field {
     for (let row: number = 0; row < tetromino.matrixLength; row++) {
       for (let column: number = 0; column < tetromino.matrixLength; column++) {
         if (tetromino.matrix[row][column]) {
-          this._playFieldArr[tetromino.row + row][tetromino.column + column] = tetromino.name;
+          this._playFieldArr[tetromino.row + row] && (this._playFieldArr[tetromino.row + row][tetromino.column + column] = tetromino.name);
         }
       }
     }
+  }
+
+  public resetField(): void {
+    this._playFieldArr.forEach(arr => arr.fill(0)
+      .map(() => new Array(this._columns).fill(0)))
   }
 
   private generateField(el: Element): void {

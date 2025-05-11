@@ -28,12 +28,12 @@ export const TetrominoMatrix = {
   ],
   [TetrominoName.S]: [
     [0, 1, 1],
-    [0, 1, 0],
-    [1, 1, 0]
+    [1, 1, 0],
+    [0, 0, 0]
   ],
   [TetrominoName.Z]: [
     [1, 1, 0],
-    [0, 1, 0],
-    [0, 1, 1]
+    [0, 1, 1],
+    [0, 0, 0]
   ],
 }
