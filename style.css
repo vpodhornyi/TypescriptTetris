@@ -258,3 +258,12 @@ body {
 .start-button:hover {
     background-color: #0056b3;
 }
+
+.footer {
+    padding: 40px 0;
+}
+
+.footer a {
+    color: #6bb5f7;
+    text-decoration: none;
+}
