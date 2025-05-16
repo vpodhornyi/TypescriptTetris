@@ -19,7 +19,6 @@ export class UIManager {
   private _lines: HTMLElement;
   private _pause: HTMLElement;
 
-
   constructor(config: TetrisConfig) {
     this._container = this.getElement(config.container);
     this._startDialog = this.getElement(config.startDialog);

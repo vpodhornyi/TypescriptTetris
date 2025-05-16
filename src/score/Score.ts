@@ -33,10 +33,6 @@ export class Score {
     return this._speed;
   }
 
-  get levelStep(): number {
-    return this._levelStep;
-  }
-
   public isNewLevel(): boolean {
     return this._score % this._scoreLevelIncrease === 0;
   }
