@@ -4,8 +4,8 @@ import {TetrisConfig} from "../config/TetrisConfig.js";
 
 export class MainField extends Field {
 
-  constructor(root: Element, config: TetrisConfig) {
-    super(root, config.mainFieldRows, config.mainFieldColumns, config.cellsMain);
+  constructor(config: TetrisConfig) {
+    super(config.mainFieldRows, config.mainFieldColumns, config.cellsMain);
   }
 
   protected setToCenter(tetromino: Tetromino) {
