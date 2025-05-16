@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tetris</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<h1 class="game-name">Tetris</h1>
+<div class="container" id="container">
+    <div class="game-container">
+        <div class="pause-message" id="pause">PAUSED</div>
+        <div id="main_field" class="field main_field"></div>
+    </div>
+    <div class="score-container">
+        <div id="extra_field" class="field extra_field"></div>
+        <div class="stats">
+            <p>Score: <span id="score">0</span></p>
+            <p>Level: <span id="level">0</span></p>
+            <p>Lines: <span id="lines">0</span></p>
+        </div>
+        <div class="controls">
+            <button type="button" class="control-button btn_rotate">Rotate</button>
+            <button type="button" class="control-button btn_left">Left</button>
+            <button type="button" class="control-button btn_right">Right</button>
+            <button type="button" class="control-button btn_down">Down</button>
+            <button type="button" class="control-button btn_pause">Pause</button>
+        </div>
+    </div>
+    <div class="dialog" id="start_dialog">
+        <h2>Welcome to Tetris</h2>
+        <p>Use the keyboard controls:</p>
+        <p>← Left Arrow: Move left</p>
+        <p>→ Right Arrow: Move right</p>
+        <p>↑ Up Arrow: Rotate</p>
+        <p>↓ Down Arrow: Move down</p>
+        <p>p: Pause</p>
+        <button class="dialog-button start-button" id="start_game_button">Start Game</button>
+    </div>
+    <div class="dialog dialog-game-over" id="game_over_dialog">
+        <h2>GAME OVER</h2>
+        <button class="dialog-button game-over-button" id="game_over_button">Cancel</button>
+    </div>
+</div>
+<footer class="footer">
+    <a target="_blank" href="https://github.com/vpodhornyi/TypescriptTetris/tree/main">Visit Github repository</a>
+</footer>
+</body>
+<script type="module" src="./app.js"></script>
+</html>
