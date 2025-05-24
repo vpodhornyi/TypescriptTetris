@@ -1,34 +1,44 @@
 import {TetrisConfig} from "./config/TetrisConfig.js";
 import {Game} from "./Game.js";
 
-export class UIManager {
-    private _container: HTMLElement;
-    private _startDialog: HTMLElement;
-    private _gameOverDialog: HTMLElement;
-    private _mainField: HTMLElement;
-    private _extraField: HTMLElement;
-    private _score: HTMLElement;
-    private _level: HTMLElement;
-    private _lines: HTMLElement;
-    private _pause: HTMLElement;
+const NOT_FOUND_ELEMENT = 'Element was not found:'
+const DIV: string = 'div';
+const CSS = {
+  block: 'block',
+  none: 'none',
+}
 
+export class UIManager {
+  private _container: HTMLElement;
+  private _startDialog: HTMLElement;
+  private _gameOverDialog: HTMLElement;
+  private _mainField: HTMLElement;
+  private _extraField: HTMLElement;
+  private _score: HTMLElement;
+  private _level: HTMLElement;
+  private _lines: HTMLElement;
+  private _pause: HTMLElement;
 
   constructor(config: TetrisConfig) {
-      this._container = this.getElement(config.container);
-      this._startDialog = this.getElement(config.startDialog);
-      this._gameOverDialog = this.getElement(config.gameOverDialog);
-      this._mainField = this.getElement(config.mainField);
-      this._extraField = this.getElement(config.extraField);
-      this._score = this.getElement(config.score);
-      this._level = this.getElement(config.level);
-      this._lines = this.getElement(config.lines);
-      this._pause = this.getElement(config.pause);
+    this._container = this.getElement(config.container);
+    this._startDialog = this.getElement(config.startDialog);
+    this._gameOverDialog = this.getElement(config.gameOverDialog);
+    this._mainField = this.getElement(config.mainField);
+    this._extraField = this.getElement(config.extraField);
+    this._score = this.getElement(config.score);
+    this._level = this.getElement(config.level);
+    this._lines = this.getElement(config.lines);
+    this._pause = this.getElement(config.pause);
+    this.generateField(this._mainField, config.mainFieldRows, config.mainFieldColumns);
+    this.generateField(this._extraField, config.extraFieldRows, config.extraFieldColumns);
+    this.setLevelUI(config.startLevel);
+    this.setLinesUI(config.startLines);
   }
 
   private getElement<T extends HTMLElement>(selector: string): T {
     const el = document.querySelector(selector);
     if (!el) {
-      throw new Error(`Element was not found: ${selector}`);
+      throw new Error(`${NOT_FOUND_ELEMENT} ${selector}`);
     }
     return el as T;
   }
@@ -37,54 +47,61 @@ export class UIManager {
     return e?.classList.contains(className);
   }
 
-  public get container(): HTMLElement {
-    return this._container;
+  private generateField(el: Element, rows: number, columns: number): void {
+    const amount = rows * columns;
+    for (let i: number = 0; i < amount; i++) {
+      el.append(document.createElement(DIV));
+    }
   }
 
-  public get startDialog(): HTMLElement {
-    return this._startDialog;
+  public setScoreUI(value: number): void {
+    this._score.innerHTML = String(value);
   }
 
-  public get gameOverDialog(): HTMLElement {
-    return this._gameOverDialog;
+  public setLevelUI(value: number): void {
+    this._level.innerHTML = String(value);
   }
 
-  public get mainField(): HTMLElement {
-    return this._mainField;
+  public setLinesUI(value: number): void {
+    this._lines.innerHTML = String(value);
   }
 
-  public get extraField(): HTMLElement {
-    return this._extraField;
+  public showStartDialog() {
+    this._startDialog.style.display = CSS.block;
   }
 
-  public get score(): HTMLElement {
-    return this._score;
+  private hideStartDialog() {
+    this._startDialog.style.display = CSS.none;
   }
 
-  public get level(): HTMLElement {
-    return this._level;
+  public showPause() {
+    this._pause.style.display = CSS.block;
   }
 
-  public get lines(): HTMLElement {
-    return this._lines;
+  public hidePause() {
+    this._pause.style.display = CSS.none;
   }
 
-  public get pause(): HTMLElement {
-    return this._pause;
+  public showGameOverDialog() {
+    this._gameOverDialog.style.display = CSS.block;
+  }
+
+  private hideGameOverDialog() {
+    this._gameOverDialog.style.display = CSS.none;
   }
 
   public startGame(game: Game, config: TetrisConfig): void {
-    this.container.addEventListener('click', (event: Event) => {
+    this._container.addEventListener('click', (event: Event) => {
       const eventElement = event.target as HTMLElement;
 
       if (this.isClickBtn(eventElement, 'start-button')) {
-        this.startDialog.style.display = "none";
+        this.hideStartDialog();
         game.play();
       }
 
       if (this.isClickBtn(eventElement, 'game-over-button')) {
-        this.gameOverDialog.style.display = "none";
-        this.startDialog.style.display = "block";
+        this.hideGameOverDialog()
+        this.showStartDialog();
         game.reset(config);
       }
 

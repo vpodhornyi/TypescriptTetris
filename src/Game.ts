@@ -14,18 +14,16 @@ export class Game {
   private readonly _extraField: Field;
   private readonly _tetrominoList: TetrominoList;
   private readonly _ui: UIManager;
-  private readonly _gameOverDialog: HTMLElement;
   private readonly _score: Score;
   private mainTetromino: Tetromino;
   private nextTetromino: Tetromino;
 
   constructor(ui: UIManager, config: TetrisConfig) {
     this.isPause = false;
-    this._mainField = new MainField(ui.mainField, config);
-    this._extraField = new ExtraField(ui.extraField, config);
-    this._tetrominoList = new TetrominoList();
     this._ui = ui;
-    this._gameOverDialog = ui.gameOverDialog;
+    this._mainField = new MainField(config);
+    this._extraField = new ExtraField(config);
+    this._tetrominoList = new TetrominoList();
     this._score = new Score(ui, config);
     this.mainTetromino = this._tetrominoList.getRandomTetromino();
     this.nextTetromino = this._tetrominoList.getRandomTetromino().rotate(this._extraField);
@@ -37,7 +35,7 @@ export class Game {
 
       if (this._mainField.isGameOver()) {
         clearInterval(this.intervalID);
-        this._gameOverDialog.style.display = 'block';
+        this._ui.showGameOverDialog();
       } else {
         this.mainTetromino = this.nextTetromino;
         this._mainField.addTetromino(this.mainTetromino);
@@ -69,10 +67,10 @@ export class Game {
 
   public makePause(): void {
     if (this.isPause) {
-      this._ui.pause.style.display = "none";
+      this._ui.hidePause();
       this.autoMoveDown();
     } else {
-      this._ui.pause.style.display = "block";
+      this._ui.showPause();
       clearInterval(this.intervalID);
     }
     this.isPause = !this.isPause;

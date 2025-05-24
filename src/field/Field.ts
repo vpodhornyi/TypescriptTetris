@@ -1,7 +1,6 @@
 import {Tetromino} from "../tetromino/Tetromino.js";
 import {Score} from "../score/Score.js";
 
-const DIV: string = 'div';
 const CLASS_TETROMINO: string = 'block';
 const CLASS: string = 'class';
 
@@ -13,14 +12,13 @@ export abstract class Field {
   private readonly cells: Array<Element>;
   private _rowCount: number;
 
-  protected constructor(root: Element, rows: number, columns: number, cellSelector: string) {
+  protected constructor(rows: number, columns: number, cellSelector: string) {
     this._rows = rows;
     this._columns = columns;
     this._playFieldArr = new Array(this._rows)
       .fill(0)
       .map(() => new Array(this._columns).fill(0));
     this._amount = this._rows * this._columns;
-    this.generateField(root);
     this.cells = Array.from(document.querySelectorAll(cellSelector));
     this._rowCount = 0;
   }
@@ -135,11 +133,5 @@ export abstract class Field {
   public resetField(): void {
     this._playFieldArr.forEach(arr => arr.fill(0)
       .map(() => new Array(this._columns).fill(0)))
-  }
-
-  private generateField(el: Element): void {
-    for (let i: number = 0; i < this._amount; i++) {
-      el.append(document.createElement(DIV));
-    }
   }
 }
